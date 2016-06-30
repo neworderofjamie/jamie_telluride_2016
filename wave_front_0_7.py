@@ -5,7 +5,7 @@ import numpy as np
 from scipy import misc
 
 # Should we run on SpiNNaker (otherwise NEST)
-spinnaker = True
+spinnaker = False
 
 # Should delay or weight be modulated
 delay_modulation = False
@@ -112,13 +112,13 @@ for x, y in itertools.product(range(cost_image.shape[0]),
                        cost_image, conn_list,
                        delay_func, weight_func)
 
-'''
+
 stdp_model = sim.STDPMechanism(
-    timing_dependence=sim.SpikePairRule(tau_plus=5.0, tau_minus=5.0, A_plus=0.000001, A_minus=instant_spike_weight),
-    weight_dependence=sim.AdditiveWeightDependence(w_min=0.0, w_max=instant_spike_weight),
-    dendritic_delay_fraction=1.0,
-    weight=0.0, delay=1.0)
-'''
+    timing_dependence=sim.SpikePairRule(tau_plus=5.0, tau_minus=5.0),
+    weight_dependence=sim.AdditiveWeightDependence(w_min=0.0, w_max=instant_spike_weight,
+                                                   A_plus=0.000001, A_minus=instant_spike_weight),
+    dendritic_delay_fraction=1.0)
+
 # Create connector
 sim.Projection(neurons, neurons, sim.FromListConnector(conn_list),
                target="excitatory")
@@ -140,23 +140,20 @@ spikes = neurons.getSpikes()
 
 sim.end()
 
-#neuron_x = spikes[:,0] % cost_image.shape[0]
-#neuron_y = spikes[:,0] // cost_image.shape[0]
-#end_time = np.amax(spikes[:,1])
+# Calculate x and y coordinates corresponding to each spike
+neuron_x = spikes[:,0] % cost_image.shape[0]
+neuron_y = spikes[:,0] // cost_image.shape[0]
 
-#matrix, _ = np.histogramdd((neuron_x, neuron_y, spikes[:,1]), bins=(
-matrix = np.zeros((cost_image.shape[0], cost_image.shape[1], duration), dtype=bool)
-end_time = 0
-for spike in spikes:
-    # Convert neuron index to x and y coordinates
-    neuron_x = int(spike[0]) % cost_image.shape[0]
-    neuron_y = int(spike[0]) // cost_image.shape[0]
+# Get time of last spike
+end_time = int(np.amax(spikes[:,1]))
 
-    # If any spike times occurred update end time
-    end_time = max(end_time, int(spike[1]))
-
-    # Set spikes to 1
-    matrix[neuron_x, neuron_y, spike[1] - 1] = True
+# Convert spike times to 3D spike matrix
+matrix, _ = np.histogramdd((neuron_x, neuron_y, spikes[:,1]),
+                           bins=(range(cost_image.shape[0] + 1),
+                                 range(cost_image.shape[1] + 1),
+                                 range(end_time + 1)))
+# Check spike vector only ever has ones and zeros
+assert np.amax(matrix) == 1.0
 
 print "End time:%u" % end_time
 
@@ -189,7 +186,7 @@ while True:
         spike_vector = matrix[x + x_offset,y + y_offset,:]
 
         # Find the first time bin in which it spiked
-        spike_time = np.where(spike_vector == True)[0]
+        spike_time = np.where(spike_vector > 0.0)[0]
 
         # If there were any spikes at this pixel and the first spike
         # that occured is earlier than current best
