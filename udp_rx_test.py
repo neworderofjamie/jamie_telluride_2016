@@ -19,4 +19,4 @@ while True:
         np.frombuffer(packet.data, dtype=np.int32)
     )
 
-    print (packet.src_x, packet.src_y, packet.src_cpu), values
+    print (packet.src_x, packet.src_y, packet.src_cpu), packet.arg1, values
