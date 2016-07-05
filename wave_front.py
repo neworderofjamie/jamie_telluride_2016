@@ -6,11 +6,23 @@ import numpy as np
 from scipy import misc
 
 # Should we run on SpiNNaker (otherwise NEST)
-spinnaker = True
+spinnaker = False
 
 # Should delay or weight be modulated
 delay_modulation = False
 
+# Load cost image
+cost_image = np.zeros((5, 5)).astype(np.uint8)
+print cost_image
+
+# Where to start wave front
+stim_x = 2
+stim_y = 0
+
+# Where is our destination
+target_x = 2
+target_y = 4
+'''
 # Load cost image
 cost_image = misc.imread("map.png")
 
@@ -19,8 +31,9 @@ stim_x = 43
 stim_y = 43
 
 # Where is our destination
-end_x = 10
-end_y = 10
+target_x = 10
+target_y = 10
+'''
 
 # How long to simulate
 duration = 500
@@ -30,7 +43,10 @@ duration = 500
 instant_spike_weight = 30.0
 
 def get_neuron_index(x, y, width):
-    return (x * width) + y
+    return (y * width) + x
+
+def get_neuron_x_y(index, width):
+    return (index % width), (index // width)
 
 def add_connection(start_x, start_y,
                    end_x, end_y,
@@ -45,7 +61,7 @@ def add_connection(start_x, start_y,
         mean_cost = (float(start_cost) + float(end_cost)) * 0.5
         delay = delay_func(mean_cost)
         weight = weight_func(mean_cost)
-        print weight
+
         # Add connection
         conn_list.append((get_neuron_index(start_x, start_y, cost_image.shape[0]),
                             get_neuron_index(end_x, end_y, cost_image.shape[0]),
@@ -58,7 +74,8 @@ if spinnaker:
     logger.setLevel(logging.INFO)
     logger.addHandler(logging.StreamHandler())
 
-    setup_kwargs = { "spinnaker_hostname" : "192.168.240.253" }
+    #setup_kwargs = { "spinnaker_hostname" : "192.168.240.253" }
+    setup_kwargs = {"spalloc_num_boards": 1}
 else:
     import pyNN.nest as sim
 
@@ -121,10 +138,18 @@ for x, y in itertools.product(range(cost_image.shape[0]),
                        cost_image, conn_list,
                        delay_func, weight_func)
 
+stdp_model = sim.STDPMechanism(
+    timing_dependence=sim.SpikePairRule(tau_plus=5.0, tau_minus=5.0, A_plus=0.000001, A_minus=1.0),
+    weight_dependence=sim.AdditiveWeightDependence(w_min=0.0, w_max=instant_spike_weight),
+    dendritic_delay_fraction=1.0)
+'''
+stdp_model = sim.StaticSynapse()
+'''
 # Create connector
-sim.Projection(neurons, neurons, sim.FromListConnector(conn_list),
-               sim.StaticSynapse(),
-               receptor_type="excitatory")
+proj = sim.Projection(neurons, neurons, sim.FromListConnector(conn_list),
+                      stdp_model,
+                      receptor_type="excitatory")
+
 
 # Stimulate stim neuron
 stim = sim.Population(1, sim.SpikeSourceArray(spike_times=[2.0]), label="stim")
@@ -138,8 +163,17 @@ sim.run(duration)
 
 # Read data
 data = neurons.get_data()
+weights = proj.get("weight", format='list', with_address=True)
 
 sim.end()
+
+# Create RGBA image to display final weight
+for w in weights:
+    pre_x, pre_y = get_neuron_x_y(w[0], cost_image.shape[0])
+    post_x, post_y = get_neuron_x_y(w[1], cost_image.shape[0])
+    print "(%u, %u) -> (%u, %u) = %f" % (pre_x, pre_y, post_x, post_y, w[2])
+
+    #weight_image[post_y, post_x:] = w[2]
 
 # Convert spiketrains to matrix
 end_time = 0
@@ -147,8 +181,7 @@ matrix = np.zeros((cost_image.shape[0], cost_image.shape[1], duration), dtype=bo
 for spiketrain in data.segments[0].spiketrains:
     # Convert neuron index to x and y coordinates
     neuron_index = spiketrain.annotations["source_index"]
-    neuron_x = neuron_index % cost_image.shape[0]
-    neuron_y = neuron_index // cost_image.shape[0]
+    neuron_x, neuron_y = get_neuron_x_y(neuron_index, cost_image.shape[0])
 
     # If any spike times occurred update end time
     # **NOTE** this is only used to
@@ -157,7 +190,7 @@ for spiketrain in data.segments[0].spiketrains:
 
     # Set spikes to 1
     for t in np.asarray(spiketrain):
-        matrix[neuron_x, neuron_y, t - 1] = True
+        matrix[neuron_y, neuron_x, t - 1] = True
 
 print "End time:%u" % end_time
 
@@ -165,12 +198,12 @@ print "End time:%u" % end_time
 path_image = np.zeros((cost_image.shape[0], cost_image.shape[1], 4))
 
 # Add pixels indicating stim and end to image
-path_image[stim_x, stim_y] = (0.0, 1.0, 0.0, 1.0)
-path_image[end_x,  end_y] = (0.0, 0.0, 1.0, 1.0)
+path_image[stim_y, stim_x] = (0.0, 1.0, 0.0, 1.0)
+path_image[target_y, target_x] = (0.0, 0.0, 1.0, 1.0)
 
 # Backtrack to find path
-x = end_x
-y = end_y
+x = target_x
+y = target_y
 max_time = duration
 while True:
      # If we've reached stimulus, stop
@@ -186,8 +219,13 @@ while True:
         if x_offset == 0 and y_offset == 0:
             continue
 
+        # Skip edges
+        if ((x + x_offset) < 0 or (x + x_offset) >= matrix.shape[1]
+            or (y + y_offset) < 0 or (y + y_offset) >= matrix.shape[0]):
+            continue
+
         # Get spike vector for this offset vertex
-        spike_vector = matrix[x + x_offset,y + y_offset,:]
+        spike_vector = matrix[y + y_offset,x + x_offset,:]
 
         # Find the first time bin in which it spiked
         spike_time = np.where(spike_vector == True)[0]
@@ -209,7 +247,7 @@ while True:
     max_time = first_time
 
     # Draw path point
-    path_image[x, y, :] = (1.0, 1.0, 1.0, 1.0)
+    path_image[y, x, :] = (1.0, 1.0, 1.0, 1.0)
 
 fig, axis = plt.subplots()
 
@@ -218,9 +256,9 @@ image = np.zeros((cost_image.shape[0], cost_image.shape[1]))
 image[:] = matrix[:,:,0]
 
 # Show cost and path images
-axis.imshow(cost_image, interpolation="nearest")
-axis.imshow(path_image, interpolation="nearest",
-            vmin=0.0, vmax=1.0)
+#axis.imshow(cost_image, interpolation="nearest")
+#axis.imshow(path_image, interpolation="nearest",
+#            vmin=0.0, vmax=1.0)
 
 # Show the spiking activity
 spike_image = axis.imshow(image, interpolation="nearest",
@@ -231,7 +269,7 @@ def updatefig(frame):
 
     # Decay image
     # **TODO** interval`
-    image *= 0.9
+    image *= 0.75
 
     # Add this frame's spike vector to image
     image += matrix[:,:,frame]
