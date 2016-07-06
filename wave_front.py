@@ -1,8 +1,10 @@
+import graphviz
 import itertools
 import logging
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 import numpy as np
+import sys
 from scipy import misc
 
 # Should we run on SpiNNaker (otherwise NEST)
@@ -63,8 +65,8 @@ def add_connection(start_x, start_y,
         weight = weight_func(mean_cost)
 
         # Add connection
-        conn_list.append((get_neuron_index(start_x, start_y, cost_image.shape[0]),
-                            get_neuron_index(end_x, end_y, cost_image.shape[0]),
+        conn_list.append((get_neuron_index(start_x, start_y, cost_image.shape[1]),
+                            get_neuron_index(end_x, end_y, cost_image.shape[1]),
                             weight, delay))
 
 if spinnaker:
@@ -154,7 +156,7 @@ proj = sim.Projection(neurons, neurons, sim.FromListConnector(conn_list),
 # Stimulate stim neuron
 stim = sim.Population(1, sim.SpikeSourceArray(spike_times=[2.0]), label="stim")
 sim.Projection(stim, neurons,
-               sim.FromListConnector([(0, get_neuron_index(stim_x, stim_y, cost_image.shape[0]),
+               sim.FromListConnector([(0, get_neuron_index(stim_x, stim_y, cost_image.shape[1]),
                                        instant_spike_weight, 1.0)]),
                sim.StaticSynapse())
 
@@ -163,18 +165,25 @@ sim.run(duration)
 
 # Read data
 data = neurons.get_data()
-weights = proj.get("weight", format='list', with_address=True)
+weights = proj.get("weight", format="list", with_address=True)
 
 sim.end()
 
-# Create RGBA image to display final weight
+# Create weight graph with each neuron marked
+weight_graph = graphviz.Digraph(engine="neato", format="svg")
+spacing = 2.0
+for n in range(num_neurons):
+    neuron_x, neuron_y = get_neuron_x_y(n, cost_image.shape[1])
+    weight_graph.node(str(n), label="%u, %u" % (neuron_x, neuron_y),
+                      pos="%f,-%f!" % (neuron_x * spacing, neuron_y * spacing))
+
+# Add edges with weight
 for w in weights:
-    pre_x, pre_y = get_neuron_x_y(w[0], cost_image.shape[0])
-    post_x, post_y = get_neuron_x_y(w[1], cost_image.shape[0])
-    print "(%u, %u) -> (%u, %u) = %f" % (pre_x, pre_y, post_x, post_y, w[2])
+    pre_x, pre_y = get_neuron_x_y(w[0], cost_image.shape[1])
+    post_x, post_y = get_neuron_x_y(w[1], cost_image.shape[1])
+    weight_graph.edge(str(int(w[0])), str(int(w[1])), label="%.4f" % w[2])
 
-    #weight_image[post_y, post_x:] = w[2]
-
+weight_graph.render("weights", view=True)
 # Convert spiketrains to matrix
 end_time = 0
 matrix = np.zeros((cost_image.shape[0], cost_image.shape[1], duration), dtype=bool)
