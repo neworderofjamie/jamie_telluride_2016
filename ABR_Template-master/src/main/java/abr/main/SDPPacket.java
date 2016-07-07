@@ -1,6 +1,7 @@
 package abr.main;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 //============================================================================
 // SDPPacket
@@ -14,21 +15,22 @@ public class SDPPacket
     private static final int FLAG_REPLY = 0x87;
     private static final int FLAG_NO_REPLY = 0x07;
 
-    public SDPPacket(byte[] data)
+    public SDPPacket(byte[] data, int length)
     {
         // Wrap header bytes from incoming data into byte buffer
         // **NOTE** ignore first two bytes
         ByteBuffer headerByteBuffer = ByteBuffer.wrap(data, 2, 8);
+        headerByteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         // Read header words
-        int flags = (int)headerByteBuffer.get();
-        m_Tag = (int)headerByteBuffer.get();
-        int destCPUPort = (int)headerByteBuffer.get();
-        int srcCPUPort = (int)headerByteBuffer.get();
-        m_DestY = (int)headerByteBuffer.get();
-        m_DestX = (int)headerByteBuffer.get();
-        m_SrcY = (int)headerByteBuffer.get();
-        m_SrcX = (int)headerByteBuffer.get();
+        int flags = readU8(headerByteBuffer);
+        m_Tag = readU8(headerByteBuffer);
+        int destCPUPort = readU8(headerByteBuffer);
+        int srcCPUPort = readU8(headerByteBuffer);
+        m_DestY = readU8(headerByteBuffer);
+        m_DestX = readU8(headerByteBuffer);
+        m_SrcY = readU8(headerByteBuffer);
+        m_SrcX = readU8(headerByteBuffer);
 
         // Unpack packed header words
         m_DestCPU = destCPUPort & 0x1F;
@@ -39,7 +41,8 @@ public class SDPPacket
         m_ReplyExpected = (flags == FLAG_REPLY);
 
         // Wrap payload in second byte buffer
-        m_Data = ByteBuffer.wrap(data, 10, data.length - 10);
+        m_Data = ByteBuffer.wrap(data, 10, length - 10);
+        m_Data.order(ByteOrder.LITTLE_ENDIAN);
     }
 
     //============================================================================
@@ -89,6 +92,23 @@ public class SDPPacket
         return m_Data;
     }
 
+    //============================================================================
+    // Protected static methods
+    //============================================================================
+    protected static short readU8(ByteBuffer buffer)
+    {
+        return ((short) (buffer.get() & 0xFF));
+    }
+
+    protected static int readU16(ByteBuffer buffer)
+    {
+        return ((int) (buffer.getShort() & 0xFFFF));
+    }
+
+    protected static long readU32(ByteBuffer buffer)
+    {
+        return ((long) (buffer.getInt() & 0xFFFFFFFFL));
+    }
     //============================================================================
     // Private members
     //============================================================================

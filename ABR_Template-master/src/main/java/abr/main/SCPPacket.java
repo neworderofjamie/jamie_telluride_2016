@@ -5,18 +5,18 @@ package abr.main;
 // SpiNNaker control packet
 public class SCPPacket extends SDPPacket
 {
-    public SCPPacket(byte[] data)
+    public SCPPacket(byte[] data, int length)
     {
-        this(data, 3);
+        this(data, length, 3);
     }
 
-    public SCPPacket(byte[] data, int numArguments)
+    public SCPPacket(byte[] data, int length, int numArguments)
     {
-        super(data);
+        super(data, length);
 
         // Read command
-        m_CmdRC = (int)get_Data().getShort();
-        m_Seq = (int)get_Data().getShort();
+        m_CmdRC = readU16(get_Data());
+        m_Seq = readU16(get_Data());
 
         // Read argument words
         int dataLen = get_Data().remaining();
