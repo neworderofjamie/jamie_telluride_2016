@@ -26,6 +26,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,11 +37,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
-
-import android.widget.TextView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
+
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -48,14 +49,16 @@ import java.util.HashMap;
 public class Main_activity extends Activity implements IOIOLooperProvider, SensorEventListener, ConnectionCallbacks, OnConnectionFailedListener
 		 // implements IOIOLooperProvider: from IOIOActivity
 {
+	private static final String LogTag = "Main_activity";
+
 	private final IOIOAndroidApplicationHelper helper_ = new IOIOAndroidApplicationHelper(this, this); // from IOIOActivity
 	
 	// ioio variables
 	IOIO_thread m_ioio_thread;
 
-	//SpiNNakerReceiver_thread m_SpiNNakerReceiverThread;
+	private SpiNNakerReceiver_thread m_SpiNNakerReceiverThread;
+	private Handler m_SpiNNakerReceiverHandler;
 
-	//private Handler m_SpiNNakerReceiverHandler;
 	private TableLayout m_ActuatorTable;
 	private HashMap<Integer, TextView[]> m_ActuatorData;
 
@@ -104,6 +107,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		
 		helper_.create(); // from IOIOActivity
 
+		m_ActuatorData = new HashMap<Integer, TextView[]>();
 		m_ActuatorTable = (TableLayout) findViewById(R.id.actuator_table);
 
 		//initialize textviews
@@ -169,6 +173,45 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 	    mLocationRequest.setInterval(2000);
 	    mLocationRequest.setFastestInterval(500);
 	    mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+		// **TEMP** add test actuator
+		AddActuator("remote", 2);
+
+		m_SpiNNakerReceiverHandler =
+				new Handler()
+				{
+					@Override
+					public void handleMessage(Message msg) {
+						// Extract message fields
+						int sourcePopulation = msg.getData().getInt("sourcePopulation");
+						float[] payload = msg.getData().getFloatArray("payload");
+
+						TextView[] view = m_ActuatorData.get(Integer.valueOf(sourcePopulation));
+						if(view == null)
+						{
+							Log.e(LogTag, String.format("Cannot find view corresponding to source population hash %u",
+									sourcePopulation));
+						}
+						else if(view.length != payload.length)
+						{
+							Log.e(LogTag, String.format("View corresponding to source population hash %u has length %u rather than %u",
+									sourcePopulation, view.length, payload.length));
+						}
+						else
+						{
+							for(int i = 0; i < view.length; i++)
+							{
+								view[i].setText(String.format("%f", payload[i]));
+							}
+						}
+						// Superclass
+						super.handleMessage(msg);
+					}
+				};
+
+		// Create a thread to receive UDP from SpiNNaker
+		m_SpiNNakerReceiverThread = new SpiNNakerReceiver_thread(50007, 15, m_SpiNNakerReceiverHandler);
+		m_SpiNNakerReceiverThread.start();
 	}
 	//Method necessary for google play location services
 	protected synchronized void buildGoogleApiClient() {
