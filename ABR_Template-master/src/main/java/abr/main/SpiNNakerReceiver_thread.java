@@ -2,16 +2,18 @@ package abr.main;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.nio.IntBuffer;
 
 //============================================================================
 // SpiNNakerReceiver_thread
 //============================================================================
-public class SpiNNakerReceiver_thread implements Runnable {
-    private static final String LogTag = "SpiNNakerReceiver_thread";
+public class SpiNNakerReceiver_thread extends Thread {
+    private static final String LogTag = "SpiNNakerReceiver";
 
     public SpiNNakerReceiver_thread(int port, int fixedPointPosition, Handler handler)
     {
@@ -42,7 +44,7 @@ public class SpiNNakerReceiver_thread implements Runnable {
                 socket.receive(receivedDatagram);
 
                 // Parse SCP packet
-                SCPPacket packet = new SCPPacket(receivedDatagram.getData());
+                SCPPacket packet = new SCPPacket(receivedDatagram.getData(), receivedDatagram.getLength());
 
                 // If there is further data in packet
                 if(packet.get_Data().hasRemaining())
@@ -51,11 +53,11 @@ public class SpiNNakerReceiver_thread implements Runnable {
                     int sourcePopulation = packet.get_Arg1();
 
                     // Convert payload into floating point
-                    int[] fixedPointPayload = packet.get_Data().asIntBuffer().array();
-                    float[] floatingPointPayload = new float[fixedPointPayload.length];
-                    for(int i = 0; i < fixedPointPayload.length; i++)
+                    IntBuffer fixedPointPayload = packet.get_Data().asIntBuffer();
+                    float[] floatingPointPayload = new float[fixedPointPayload.remaining()];
+                    for(int i = 0; i < fixedPointPayload.remaining(); i++)
                     {
-                        floatingPointPayload[i] = m_FixedPointScale * (float)fixedPointPayload[i];
+                        floatingPointPayload[i] = m_FixedPointScale * (float)fixedPointPayload.get();
                     }
 
                     // Build bundle containing source population
@@ -74,9 +76,11 @@ public class SpiNNakerReceiver_thread implements Runnable {
             //socket.close();
         }
         catch(SocketException e) {
+            Log.e(LogTag, String.format("Socket exception %s", e.toString()));
             // TODO intelligent error handling
         }
         catch(IOException e) {
+            Log.e(LogTag, String.format("IO exception %s", e.toString()));
             // TODO intelligent error handling
         }
     }
