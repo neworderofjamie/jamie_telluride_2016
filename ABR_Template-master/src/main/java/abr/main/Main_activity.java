@@ -438,16 +438,33 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		label.setText(name);
 		row.addView(label);
 
+		TableRow.LayoutParams labelParams = (TableRow.LayoutParams)label.getLayoutParams();
+		labelParams.setMargins(2,2,2,2);
+		labelParams.column = 0;
+		labelParams.width = TableRow.LayoutParams.FILL_PARENT;
+		labelParams.height = TableRow.LayoutParams.WRAP_CONTENT;
+		label.setLayoutParams(labelParams);
+
 		// Add a text view to array for each dimension
 		TextView[] values = new TextView[numDimensions];
 		for(int i = 0; i < numDimensions; i++)
 		{
 			values[i] = new TextView(this);
+			values[i].setText("?");
 			row.addView(values[i]);
+
+			TableRow.LayoutParams valueParams = (TableRow.LayoutParams)values[i].getLayoutParams();
+			valueParams.setMargins(2,2,2,2); //To "draw" margins
+			valueParams.column = 1 + i;
+			valueParams.width = TableRow.LayoutParams.FILL_PARENT;
+			valueParams.height = TableRow.LayoutParams.WRAP_CONTENT;
+			values[i].setLayoutParams(valueParams);
+			values[i].setPadding(2, 2, 2, 2);
 		}
 
 		// Add row to table
-		m_ActuatorTable.addView(row);
+		m_ActuatorTable.addView(row, new TableLayout.LayoutParams(
+				TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
 		m_ActuatorData.put(nameHashInt, values);
 	}
 }
