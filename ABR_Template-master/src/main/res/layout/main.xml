@@ -4,11 +4,6 @@
     android:background="#000000"
     android:orientation="horizontal" >
 
-    <org.opencv.android.JavaCameraView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/color_blob_detection_activity_surface_view" />
-    
     <TextView
         android:id="@+id/distanceText"
         android:layout_width="wrap_content"
@@ -71,4 +66,12 @@
         android:paddingLeft="350dp"
         android:text="@string/sonar2"
         android:textColor="#FFF" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/headingText"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/btnAuto"
+        android:id="@+id/actuator_table"></TableLayout>
 </RelativeLayout>

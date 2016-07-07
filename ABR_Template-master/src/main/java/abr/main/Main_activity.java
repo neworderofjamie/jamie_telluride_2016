@@ -8,26 +8,6 @@
  */
 package abr.main;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Calendar;
-import java.util.List;
-
-import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
-import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,30 +16,16 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.RGBLuminanceSource;
-import com.google.zxing.Reader;
-import com.google.zxing.Result;
-import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.qrcode.QRCodeReader;
 
 import ioio.lib.util.IOIOLooper;
 import ioio.lib.util.IOIOLooperProvider;
 import ioio.lib.util.android.IOIOAndroidApplicationHelper;
-import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.os.Environment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -70,7 +36,14 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import abr.main.R;
+
+import android.widget.TextView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 public class Main_activity extends Activity implements IOIOLooperProvider, SensorEventListener, ConnectionCallbacks, OnConnectionFailedListener
 		 // implements IOIOLooperProvider: from IOIOActivity
@@ -79,6 +52,12 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 	
 	// ioio variables
 	IOIO_thread m_ioio_thread;
+
+	//SpiNNakerReceiver_thread m_SpiNNakerReceiverThread;
+
+	//private Handler m_SpiNNakerReceiverHandler;
+	private TableLayout m_ActuatorTable;
+	private HashMap<Integer, TextView[]> m_ActuatorData;
 
 	//app state variables
 	private boolean autoMode;
@@ -124,7 +103,8 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		setContentView(R.layout.main);
 		
 		helper_.create(); // from IOIOActivity
-		
+
+		m_ActuatorTable = (TableLayout) findViewById(R.id.actuator_table);
 
 		//initialize textviews
 		sonar1Text = (TextView) findViewById(R.id.sonar1);
@@ -386,5 +366,45 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 			helper_.restart();
 		}
 	}
-	
+
+	private void AddActuator(String name, int numDimensions)
+	{
+		MessageDigest md5Encoder = null;
+		try
+		{
+			md5Encoder = MessageDigest.getInstance("MD5");
+		}
+		catch (NoSuchAlgorithmException e)
+		{
+			System.out.println("Exception while encrypting to md5");
+			e.printStackTrace();
+		} // Encryption algorithm
+
+		// Hash name bytes
+		md5Encoder.update(name.getBytes());
+		ByteBuffer nameHash = ByteBuffer.wrap(md5Encoder.digest());
+		int nameHashInt = nameHash.getInt();
+
+		// Create row
+		TableRow row = new TableRow(this);
+		TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+		row.setLayoutParams(lp);
+
+		// Create label
+		TextView label = new TextView(this);
+		label.setText(name);
+		row.addView(label);
+
+		// Add a text view to array for each dimension
+		TextView[] values = new TextView[numDimensions];
+		for(int i = 0; i < numDimensions; i++)
+		{
+			values[i] = new TextView(this);
+			row.addView(values[i]);
+		}
+
+		// Add row to table
+		m_ActuatorTable.addView(row);
+		m_ActuatorData.put(nameHashInt, values);
+	}
 }
