@@ -55,7 +55,7 @@ public class SpiNNakerReceiver_thread extends Thread {
                     // Convert payload into floating point
                     IntBuffer fixedPointPayload = packet.get_Data().asIntBuffer();
                     float[] floatingPointPayload = new float[fixedPointPayload.remaining()];
-                    for(int i = 0; i < fixedPointPayload.remaining(); i++)
+                    for(int i = 0; i < floatingPointPayload.length; i++)
                     {
                         floatingPointPayload[i] = m_FixedPointScale * (float)fixedPointPayload.get();
                     }
