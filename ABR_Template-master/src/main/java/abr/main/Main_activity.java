@@ -32,6 +32,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,6 +46,11 @@ import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+
+interface IActuator
+{
+	void actuate(float... values);
+}
 
 public class Main_activity extends Activity implements IOIOLooperProvider, SensorEventListener, ConnectionCallbacks, OnConnectionFailedListener
 		 // implements IOIOLooperProvider: from IOIOActivity
@@ -60,7 +66,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 	private Handler m_SpiNNakerReceiverHandler;
 
 	private TableLayout m_ActuatorTable;
-	private HashMap<Integer, TextView[]> m_ActuatorData;
+	private HashMap<Integer, Pair<TextView[], IActuator>> m_Actuators;
 
 	//app state variables
 	private boolean autoMode;
@@ -107,7 +113,10 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		
 		helper_.create(); // from IOIOActivity
 
-		m_ActuatorData = new HashMap<Integer, TextView[]>();
+		// Create actuator data structures
+		m_Actuators = new HashMap<Integer, Pair<TextView[], IActuator>>();;
+
+		// Find table for displaying current actuator state
 		m_ActuatorTable = (TableLayout) findViewById(R.id.actuator_table);
 
 		//initialize textviews
@@ -174,9 +183,27 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 	    mLocationRequest.setFastestInterval(500);
 	    mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-		// **TEMP** add test actuator
-		AddActuator("remote", 2);
+		// Add supported actuators
+		AddActuator("speed", 1,
+				new IActuator()
+				{
+					@Override
+					public void actuate(float... values)
+					{
+						m_ioio_thread.set_speed((int)(values[0] * IOIO_thread.MAX_PWM));
+					}
+				});
+		AddActuator("steer", 1,
+				new IActuator()
+				{
+					@Override
+					public void actuate(float... values)
+					{
+						m_ioio_thread.set_steering((int)(values[0] * IOIO_thread.MAX_PWM));
+					}
+				});
 
+		// Create SpiNNaker event handler
 		m_SpiNNakerReceiverHandler =
 				new Handler()
 				{
@@ -186,23 +213,34 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 						int sourcePopulation = msg.getData().getInt("sourcePopulation");
 						float[] payload = msg.getData().getFloatArray("payload");
 
-						TextView[] view = m_ActuatorData.get(Integer.valueOf(sourcePopulation));
-						if(view == null)
+						// Find text view corresponding to population hash
+						Pair<TextView[], IActuator> actuator = m_Actuators.get(Integer.valueOf(sourcePopulation));
+
+						// If it's not found
+						if(actuator == null)
 						{
-							Log.e(LogTag, String.format("Cannot find view corresponding to source population hash %u",
+							Log.e(LogTag, String.format("Cannot find actuator corresponding to source population hash %u",
 									sourcePopulation));
-						}
-						else if(view.length != payload.length)
-						{
-							Log.e(LogTag, String.format("View corresponding to source population hash %u has length %u rather than %u",
-									sourcePopulation, view.length, payload.length));
 						}
 						else
 						{
-							for(int i = 0; i < view.length; i++)
+							// If the number of text fields doesn't match the length of the payload vector
+							if (actuator.first.length != payload.length)
 							{
-								view[i].setText(String.format("%f", payload[i]));
+								Log.e(LogTag, String.format("View corresponding to source population hash %u has length %u rather than %u",
+										sourcePopulation, actuator.first.length, payload.length));
 							}
+							// Otherwise loop through each text view and set to floating point value
+							else
+							{
+								for (int i = 0; i < actuator.first.length; i++)
+								{
+									actuator.first[i].setText(String.format("%f", payload[i]));
+								}
+							}
+
+							// Call actuate method
+							actuator.second.actuate(payload);
 						}
 						// Superclass
 						super.handleMessage(msg);
@@ -410,8 +448,9 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		}
 	}
 
-	private void AddActuator(String name, int numDimensions)
+	private void AddActuator(String name, int numDimensions, IActuator actuator)
 	{
+		// Create MD5 encoder
 		MessageDigest md5Encoder = null;
 		try
 		{
@@ -465,6 +504,8 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		// Add row to table
 		m_ActuatorTable.addView(row, new TableLayout.LayoutParams(
 				TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
-		m_ActuatorData.put(nameHashInt, values);
+
+		// Add array of views and actuator to data structures
+		m_Actuators.put(nameHashInt, new Pair<TextView[], IActuator>(values, actuator));
 	}
 }
