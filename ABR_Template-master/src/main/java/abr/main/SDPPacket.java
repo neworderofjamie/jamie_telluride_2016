@@ -45,6 +45,52 @@ public class SDPPacket
         m_Data.order(ByteOrder.LITTLE_ENDIAN);
     }
 
+    public SDPPacket(boolean replyExpected, int tag, int destPort, int destCPU,
+                     int srcPort, int srcCPU, int destX, int destY, int srcX, int srcY,
+                     ByteBuffer data)
+    {
+        m_ReplyExpected = replyExpected;
+        m_Tag = tag;
+        m_DestPort = destPort;
+        m_DestCPU = destCPU;
+        m_SrcPort = srcPort;
+        m_SrcCPU = srcCPU;
+        m_DestX = destX;
+        m_DestY = destY;
+        m_SrcX = srcX;
+        m_SrcY = srcY;
+        m_Data = data;
+    }
+
+    //============================================================================
+    // Public methods
+    //============================================================================
+    public ByteBuffer writeByteBuffer()
+    {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(10 + m_Data.position());
+        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
+        // Padding
+        byteBuffer.put((byte)0);
+        byteBuffer.put((byte)0);
+
+        // Write SDP header fields
+        writeU8(byteBuffer, m_ReplyExpected ? FLAG_REPLY : FLAG_NO_REPLY);
+        writeU8(byteBuffer, m_Tag);
+        writeU8(byteBuffer, ((m_DestPort & 0x7) << 5) | (m_DestCPU & 0x1F));
+        writeU8(byteBuffer, ((m_SrcPort & 0x7) << 5) | (m_SrcCPU & 0x1F));
+        writeU8(byteBuffer, m_DestY);
+        writeU8(byteBuffer, m_DestX);
+        writeU8(byteBuffer, m_SrcY);
+        writeU8(byteBuffer, m_SrcX);
+
+        // Write data
+        byteBuffer.put(m_Data);
+
+        // Return new byte buffer
+        return byteBuffer;
+    }
+
     //============================================================================
     // Getters
     //============================================================================
@@ -109,6 +155,19 @@ public class SDPPacket
     {
         return ((long) (buffer.getInt() & 0xFFFFFFFFL));
     }
+
+    protected static void writeU8(ByteBuffer buffer, int value) {
+        buffer.put((byte)(value & 0xFF));
+    }
+
+    protected static void writeU16(ByteBuffer buffer, int value) {
+        buffer.putShort((short)(value & 0xFFFF));
+    }
+
+    protected static void writeU32(ByteBuffer buffer, long value) {
+        buffer.putInt((int)(value & 0xFFFFFFFFL));
+    }
+
     //============================================================================
     // Private members
     //============================================================================

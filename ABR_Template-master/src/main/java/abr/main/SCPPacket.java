@@ -1,4 +1,8 @@
 package abr.main;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 //============================================================================
 // SCPPacket
 //============================================================================
@@ -9,6 +13,17 @@ public class SCPPacket extends SDPPacket
     {
         this(data, length, 3);
     }
+
+    /*public SCPPacket(boolean replyExpected, int tag, int destPort, int destCPU,
+                     int srcPort, int srcCPU, int destX, int destY, int srcX, int srcY,
+                     int cmdRC, int seq, int arg1, int arg2, int arg3, ByteBuffer data)
+    {
+        ByteBuffer byteBuffer = ByteBuffer.allocate((4 * 3) + data.position());
+        byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
+        super(replyExpected, tag, destPort, destCPU, srcPort, srcCPU,
+                destX, destY, srcX, srcY, byteBuffer);
+    }*/
 
     public SCPPacket(byte[] data, int length, int numArguments)
     {
