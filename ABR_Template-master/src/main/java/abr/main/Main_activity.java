@@ -482,7 +482,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 			}
 
 			// If we have a SpiNNaker transmitter socket and address
-			if(false && m_SpiNNakerTransmitterSocket != null && m_SpiNNakerAddress != null)
+			if(m_SpiNNakerTransmitterSocket != null && m_SpiNNakerAddress != null)
 			{
 				// Create a byte buffer for payload
 				ByteBuffer payload = ByteBuffer.allocate((2 * 2) + (3 * 4) + (values.length * 4));
@@ -496,7 +496,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 				payload.putInt(0);			// Arg3
 
 				// Loop through sensor values
-				final float fixedPointScale =  (float)(1 << 16);
+				final float fixedPointScale =  (float)(1 << 15);
 				for(int i = 0 ; i < values.length; i++)
 				{
 					// Convert to fixed-point and stick in payload
@@ -509,7 +509,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 				packet.setAddress(m_SpiNNakerAddress);
 
 				// Send packet asynchronously
-				/*new AsyncTask<DatagramPacket, Void, Void>()
+				new AsyncTask<DatagramPacket, Void, Void>()
 				{
 					@Override
 					protected Void doInBackground(DatagramPacket... packets)
@@ -525,7 +525,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 						}
 						return null;
 					}
-				}.execute(packet);*/
+				}.execute(packet);
 
 			}
 		}
