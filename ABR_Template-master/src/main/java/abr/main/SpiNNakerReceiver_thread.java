@@ -64,6 +64,7 @@ public class SpiNNakerReceiver_thread extends Thread {
                     Bundle bundle = new Bundle();
                     bundle.putInt("sourcePopulation", sourcePopulation);
                     bundle.putFloatArray("payload", floatingPointPayload);
+                    bundle.putSerializable("address", receivedDatagram.getAddress());
 
                     // Attach bundle to message and send to handler
                     Message msg = Message.obtain();
@@ -77,11 +78,9 @@ public class SpiNNakerReceiver_thread extends Thread {
         }
         catch(SocketException e) {
             Log.e(LogTag, String.format("Socket exception %s", e.toString()));
-            // TODO intelligent error handling
         }
         catch(IOException e) {
             Log.e(LogTag, String.format("IO exception %s", e.toString()));
-            // TODO intelligent error handling
         }
     }
 

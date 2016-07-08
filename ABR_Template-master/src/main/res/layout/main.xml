@@ -4,74 +4,45 @@
     android:background="#000000"
     android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/distanceText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor = "#FFF"
-        android:paddingLeft="50dp"
-        android:text="@string/sonar2" />
-    
-    <TextView
-        android:id="@+id/bearingText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor = "#FFF"
-        android:paddingLeft="200dp"
-        android:text="@string/sonar2" />
-    
-    <TextView
-        android:id="@+id/headingText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor = "#FFF"
-        android:paddingLeft="350dp"
-        android:text="@string/sonar2" />
-    
-    <Button
-        android:id="@+id/btnAuto"
-        android:layout_width="@dimen/command_button_size"
-        android:layout_height="@dimen/command_button_size"
-        android:layout_margin="@dimen/command_button_margin"
-        android:background="@drawable/button_auto"
-        android:layout_alignParentBottom="true"
-		android:layout_alignParentRight="true"/>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/actuator_table"
+        android:layout_below="@+id/actuator_text"
+        android:layout_alignParentLeft="true">
+
+    </TableLayout>
 
     <TextView
-        android:id="@+id/sonar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="50dp"
-        android:text="@string/sonar2"
-        android:textColor="#FFF" />
-    
+        android:text="Actuators"
+        android:id="@+id/actuator_text"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+
     <TextView
-        android:id="@+id/sonar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="200dp"
-        android:text="@string/sonar2"
-        android:textColor="#FFF" />
-    
-    <TextView
-        android:id="@+id/sonar3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="350dp"
-        android:text="@string/sonar2"
-        android:textColor="#FFF" />
+        android:text="Sensors"
+        android:id="@+id/sensor_text"
+        android:layout_below="@+id/actuator_table"
+        android:layout_alignParentLeft="true" />
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/headingText"
+        android:layout_height="250dp"
+        android:layout_below="@+id/sensor_text"
         android:layout_alignParentLeft="true"
-        android:layout_above="@+id/btnAuto"
-        android:id="@+id/actuator_table"></TableLayout>
+        android:id="@+id/sensor_table"></TableLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="XXX.XXX.XXX.XXX"
+        android:id="@+id/spinnaker_address"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:minWidth="50dp" />
+
 </RelativeLayout>
