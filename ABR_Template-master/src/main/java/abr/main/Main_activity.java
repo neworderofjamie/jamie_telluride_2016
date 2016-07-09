@@ -157,7 +157,8 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 				});
 
 		// Add supported sensors
-		AddSensor("heading", 1, 50008);
+		AddSensor("orientation", 3, 50008);
+		AddSensor("sonar", 3, 50009);
 
 		// Create SpiNNaker event handler
 		m_SpiNNakerReceiverHandler =
@@ -224,11 +225,13 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 	@Override
 	public final void onSensorChanged(SensorEvent event)
 	{
-		if(m_ioio_thread != null){
-			//UpdateSensor("sonar", )
-			//setText("sonar1: "+m_ioio_thread.get_sonar1_reading(), sonar1Text);
-			//setText("sonar2: "+m_ioio_thread.get_sonar2_reading(), sonar2Text);
-			//setText("sonar3: "+m_ioio_thread.get_sonar3_reading(), sonar3Text);
+		// If we have an ioio thread, update sonar
+		if(m_ioio_thread != null)
+		{
+			UpdateSensor("sonar",
+					ConvertSonar(m_ioio_thread.get_sonar1_reading()),
+					ConvertSonar(m_ioio_thread.get_sonar2_reading()),
+					ConvertSonar(m_ioio_thread.get_sonar3_reading()));
 		}
 
 		//if (event.sensor.getType() == Sensor.TYPE_GRAVITY)
@@ -266,7 +269,8 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 			float heading = values[0]+12;
 			heading = (heading*5 + fixWraparound(values[0]+12))/6; //add 12 to make up for declination in Irvine, average out from previous 2 for smoothness(*/
 
-			UpdateSensor("heading", values[0]);
+			UpdateSensor("orientation",
+					values[0], values[1], values[2]);
 		}
 	}
 
@@ -346,6 +350,14 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		}
 	}
 
+	static private float ConvertSonar(int sonar)
+	{
+		// Give up representing beyond 12" (about 1m)
+		final float maxSonar = 12.0f;
+
+		// Clamp sonar
+		return (float)sonar / maxSonar;
+	}
 	//============================================================================
 	// Private methods
 	//============================================================================
@@ -489,7 +501,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 				payload.order(ByteOrder.LITTLE_ENDIAN);
 
 				// Write SCP header
-				payload.putShort((short)0);	//  CmdRC
+				payload.putShort((short)0);	// CmdRC
 				payload.putShort((short)0);	// Seq
 				payload.putInt(0);			// Arg1
 				payload.putInt(0);			// Arg2
