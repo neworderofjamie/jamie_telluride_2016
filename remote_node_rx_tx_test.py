@@ -12,17 +12,17 @@ with model:
     # Create node to print output
     def printer(t, x):
         print x
-    heading_output_node = nengo.Node(printer, size_in=1, label="output")
+    sonar_output_node = nengo.Node(printer, size_in=3, label="output")
 
     # Create an input node that receives input on UDP port 50007
     # **YUCK** have to specify something to make correct input
-    heading_input_remote_node = nengo.Node(lambda t: (0.0), label="input")
-    model.config[heading_input_remote_node].remote_rx_iptag = (3, 50008)
+    sonar_input_remote_node = nengo.Node(lambda t: (0.0, 0.0, 0.0), label="input")
+    model.config[sonar_input_remote_node].remote_rx_iptag = (3, 50009)
 
     # Connecting remote heading input via ensemble to printer
-    heading_ensemble = nengo.Ensemble(100, dimensions=1, radius=1.0)
-    nengo.Connection(heading_input_remote_node, heading_ensemble)
-    nengo.Connection(heading_ensemble, heading_output_node)
+    sonar_ensemble = nengo.Ensemble(100, dimensions=3, radius=10.0)
+    nengo.Connection(sonar_input_remote_node, sonar_ensemble)
+    nengo.Connection(sonar_ensemble, sonar_output_node)
 
     # Create remote output nodes which send speed and steering data to iptag 2
     speed_output_remote_node = nengo.Node(size_in=1, label="speed")
