@@ -29,34 +29,42 @@ if not os.path.exists(folder):
 delay_model = functools.partial(network.euclidean_hcu_delay,
                                 grid_size=1, distance_scale=0.75, velocity=0.2)
 
-# If we're training
-if train:
-    # List of phonemes
-    phonemes = []
-    stim_minicolumns = []
+# List of phonemes
+phonemes = []
+stim_minicolumns = []
 
-    # Open proc (clean phoneme onset and end)
-    with open("%s/%s.proc" % (session_name, session_name), "r") as proc_file:
-        # Loop through lines in file
-        for line in proc_file:
-            # Split columns
-            cols = line.split(" ")
+# Open proc (clean phoneme onset and end)
+with open("%s/%s.proc" % (session_name, session_name), "r") as proc_file:
+    # Loop through lines in file
+    for line in proc_file:
+        # Split columns
+        cols = line.split()
 
-            # If this is a valid phoneme
-            if cols[3] != "NA":
-                # Try and find index of phoneme
-                try:
-                    phoneme_index = phonemes.index(cols[3])
-                except ValueError:
-                    phoneme_index = len(phonemes)
-                    phonemes.append(cols[3])
+        # If this is a valid phoneme
+        if cols[3] != "NA":
+            # Try and find index of phoneme
+            try:
+                phoneme_index = phonemes.index(cols[3])
+            except ValueError:
+                phoneme_index = len(phonemes)
 
+                #if phoneme_index >= 10:
+                #    continue
+
+                phonemes.append(cols[3])
+
+            if train:
                 # Extract phoneme start and end times
                 start_ms = float(cols[1]) * 1000.0
                 end_ms = float(cols[2]) * 1000.0
 
                 # Add stimulus to list
                 stim_minicolumns.append((phoneme_index, start_ms, 20.0, end_ms - start_ms))
+
+# If we're training
+if train:
+
+    #stim_minicolumns = stim_minicolumns[:20]
 
     # Get end time of last
     training_simtime = stim_minicolumns[-1][1] + stim_minicolumns[-1][3]
@@ -82,7 +90,6 @@ if train:
 
     # Once data is read, end simulation
     end_simulation()
-'''
 else:
     # Testing parameters
     testing_simtime = 6000.0   # simulation time [ms]
