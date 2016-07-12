@@ -45,9 +45,8 @@ theta               = -50.0    # threshold
 # **NOTE** multiply by 250 to account for larger membrane capacitance
 fudge = 0.00041363506632638 * 250.0 # ensures dV = J at V=0
 
-
 # simulation-related parameters  
-dt                  = 1.0     # simulation step length [ms]
+dt = 1.0     # simulation step length [ms]
 
 # Standard cell parameters
 cell_params = {"tau_m"      : tauMem,
@@ -108,7 +107,6 @@ def poisson_generator(rate, t_start, t_stop):
     extra_spikes = []
     if len(spikes) == i:
         # ISI buf overrun
-
         t_last = spikes[-1] + numpy.random.exponential(1.0 / rate, 1)[0] * 1000.0
 
         while (t_last<t_stop):
@@ -165,18 +163,19 @@ def scale_parameters(num_mcu_per_hcu, num_mcu_neurons):
     JE = (J_eff / tau_syn_ampa_gaba) * fudge
     JI = -g * JE
 
-    return num_excitatory, num_inhibitory, JE, JI, J_eff
+    return num_excitatory, num_inhibitory, JE, JI
 
 #-------------------------------------------------------------------
 # HCU
 #-------------------------------------------------------------------
 class HCU(object):
     def __init__(self, name, sim, rng,
-                 num_excitatory, num_inhibitory, JE, JI, J_eff,
+                 num_excitatory, num_inhibitory, JE, JI,
                  e_cell_model, i_cell_model,
                  e_cell_params, i_cell_params,
                  e_cell_flush_time, e_cell_mean_firing_rate,
-                 stim_spike_times, wta, background_weight, stim_weight, simtime,
+                 stim_spike_times, wta, background_weight, background_rate,
+                 stim_weight, simtime,
                  record_bias, record_spikes, record_membrane):
 
         logger.info("Creating HCU:%s" % name)
@@ -187,16 +186,6 @@ class HCU(object):
         # compute number of excitatory synapses on neuron
         num_excitatory_synapses = int(epsilon * num_excitatory)
 
-        # synaptic weights, scaled for alpha functions, such that
-        # for constant membrane potential, charge J would be deposited
-        # **NOTE** multiply by 250 to account for larger membrane capacitance
-        fudge = 0.00041363506632638 * 250.0 # ensures dV = J at V=0
-
-        # threshold, external, and Poisson generator rates:
-        nu_thresh = (theta - U0) / (J_eff * num_excitatory_synapses * tauMem)
-        nu_ext    = eta * nu_thresh     # external rate per synapse
-        p_rate    = 1000 * nu_ext * num_excitatory_synapses  # external input rate per neuron (Hz)
-
         # Cache recording flags
         self.record_bias = record_bias
         self.record_spikes = record_spikes
@@ -206,8 +195,6 @@ class HCU(object):
         logger.debug("Membrane potentials uniformly distributed between %g mV and %g mV.", -80, U0)
         membrane_voltage_distribution = RandomDistribution("uniform", low=-80.0, high=U0, rng=rng)
 
-        logger.debug("Background noise rate %g Hz.", p_rate)
-
         logger.debug("Creating excitatory population with %d neurons.", num_excitatory)
         self.e_cells = sim.Population(num_excitatory, e_cell_model(**e_cell_params),
                                       label="%s - e_cells" % name)
@@ -215,9 +202,6 @@ class HCU(object):
 
         # Set e cell mean firing rate
         self.e_cells.spinnaker_config.mean_firing_rate = e_cell_mean_firing_rate
-
-        # **HACK** issue #28 means plastic version needs clustering hack
-        self.e_cells.spinnaker_config.max_neurons_per_core = 256
 
         # **HACK** issue #18 means that we end up with 1024 wide clusters
         # which needs a lot of 256-wide neuron and synapse cores
@@ -229,15 +213,15 @@ class HCU(object):
         # **YUCK** record spikes actually entirely ignores
         # sampling interval but throws exception if it is not set
         if self.record_spikes:
-            self.e_cells.record("spikes", sampling_interval=100.0)
+            self.e_cells.record("spikes", sampling_interval=1000.0)
 
         if self.record_bias:
-            self.e_cells.record("bias", sampling_interval=100.0)
+            self.e_cells.record("bias", sampling_interval=1000.0)
 
         if self.record_membrane:
-            self.e_cells.record("v", sampling_interval=100.0)
+            self.e_cells.record("v", sampling_interval=1000.0)
 
-        e_poisson = sim.Population(num_excitatory, sim.SpikeSourcePoisson(rate=p_rate, duration=simtime),
+        e_poisson = sim.Population(num_excitatory, sim.SpikeSourcePoisson(rate=background_rate, duration=simtime),
                                    label="%s - e_poisson" % name)
 
         logger.debug("Creating background->E AMPA connection weight %g nA.", background_weight)
@@ -258,7 +242,7 @@ class HCU(object):
             if self.record_spikes:
                 self.i_cells.record("spikes")
 
-            i_poisson = sim.Population(num_inhibitory, sim.SpikeSourcePoisson(rate=p_rate, duration=simtime),
+            i_poisson = sim.Population(num_inhibitory, sim.SpikeSourcePoisson(rate=background_rate, duration=simtime),
                                        label="%s - i_poisson" % name)
 
             logger.debug("Creating I->E GABA connection with connection probability %g, weight %g nA and delay %g ms.", epsilon, JI, delay)
@@ -318,7 +302,7 @@ class HCU(object):
     # Uses adaptive neuron model and doesn't record biases
     @classmethod
     def testing_adaptive(cls, name, sim, rng,
-                         num_excitatory, num_inhibitory, JE, JI, J_eff,
+                         num_excitatory, num_inhibitory, JE, JI,
                          bias, tau_ca2, i_alpha,
                          e_cell_mean_firing_rate,
                          simtime, stim_spike_times,
@@ -335,11 +319,12 @@ class HCU(object):
 
         # Build HCU
         return cls(name=name, sim=sim, rng=rng,
-                   num_excitatory=num_excitatory, num_inhibitory=num_inhibitory, JE=JE, JI=JI, J_eff=J_eff,
+                   num_excitatory=num_excitatory, num_inhibitory=num_inhibitory, JE=JE, JI=JI,
                    e_cell_model=bcpnn.IF_curr_ca2_adaptive_dual_exp, i_cell_model=sim.IF_curr_exp,
                    e_cell_params=e_cell_params, i_cell_params=cell_params,
                    e_cell_flush_time=None, e_cell_mean_firing_rate=e_cell_mean_firing_rate,
-                   stim_spike_times=stim_spike_times, wta=True, background_weight=None,
+                   stim_spike_times=stim_spike_times, wta=True,
+                   background_weight=0.4, background_rate=65.0,
                    stim_weight=4.0, simtime=simtime, record_bias=False,
                    record_spikes=True, record_membrane=record_membrane)
 
@@ -347,7 +332,7 @@ class HCU(object):
     # Uses a non-adaptive neuron model and records biaseses
     @classmethod
     def training(cls, name, sim, rng,
-                 num_excitatory, num_inhibitory, JE, JI, J_eff,
+                 num_excitatory, num_inhibitory, JE, JI,
                  intrinsic_tau_z, intrinsic_tau_p,
                  simtime, e_cell_mean_firing_rate, stim_spike_times):
         # Copy base cell parameters
@@ -362,11 +347,12 @@ class HCU(object):
         
         # Build HCU
         return cls(name=name, sim=sim, rng=rng,
-                   num_excitatory=num_excitatory, num_inhibitory=num_inhibitory, JE=JE, JI=JI, J_eff=J_eff,
+                   num_excitatory=num_excitatory, num_inhibitory=num_inhibitory, JE=JE, JI=JI,
                    e_cell_model=bcpnn.IF_curr_dual_exp, i_cell_model=sim.IF_curr_exp,
                    e_cell_params=e_cell_params, i_cell_params=cell_params,
                    e_cell_flush_time=500.0, e_cell_mean_firing_rate=e_cell_mean_firing_rate,
-                   stim_spike_times=stim_spike_times, wta=False, background_weight=0.2,
+                   stim_spike_times=stim_spike_times, wta=False,
+                   background_weight=0.2, background_rate=65.0,
                    stim_weight=2.0, simtime=simtime, record_bias=True,
                    record_spikes=True, record_membrane=False)
 
@@ -454,19 +440,18 @@ def train_discrete(ampa_tau_zi, ampa_tau_zj, nmda_tau_zi, nmda_tau_zj, tau_p,
                    num_hcu, num_mcu_per_hcu, num_mcu_neurons, **setup_kwargs):
 
     # Scale parameters to obtain HCU size and synaptic stringth
-    num_excitatory, num_inhibitory, JE, JI, J_eff = scale_parameters(num_mcu_per_hcu, num_mcu_neurons)
-
+    num_excitatory, num_inhibitory, JE, JI = scale_parameters(num_mcu_per_hcu, num_mcu_neurons)
 
     # Setup simulator and seed RNG
     sim.setup(timestep=dt, min_delay=dt, max_delay=7.0 * dt, **setup_kwargs)
     rng = NumpyRNG(seed=1)
 
     # Calculate mean firing rate
-    e_cell_mean_firing_rate = (num_mcu_neurons / num_excitatory) * 20.0
+    e_cell_mean_firing_rate = 4.0#(float(num_mcu_neurons) / float(num_excitatory)) * 20.0
 
     # Build HCUs configured for training
     hcus = [HCU.training(name="%u" % h, sim=sim, rng=rng, simtime=training_simtime,
-                         num_excitatory=num_excitatory, num_inhibitory=num_inhibitory, JE=JE, JI=JI, J_eff=J_eff,
+                         num_excitatory=num_excitatory, num_inhibitory=num_inhibitory, JE=JE, JI=JI,
                          intrinsic_tau_z=ampa_tau_zj, intrinsic_tau_p=tau_p,
                          e_cell_mean_firing_rate=e_cell_mean_firing_rate,
                          stim_spike_times=generate_discrete_hcu_stimuli(stim_minicolumns, num_excitatory, num_mcu_per_hcu)) for h in range(num_hcu)]
@@ -528,7 +513,7 @@ def test_discrete(connection_weight_filenames, hcu_biases,
     assert len(connection_weight_filenames) == (num_hcu ** 2), "A tuple of weight matrix filenames must be provided for each HCU->HCU product"
 
     # Scale parameters to obtain HCU size and synaptic stringth
-    num_excitatory, num_inhibitory, JE, JI, J_eff = scale_parameters(num_mcu_per_hcu, num_mcu_neurons)
+    num_excitatory, num_inhibitory, JE, JI = scale_parameters(num_mcu_per_hcu, num_mcu_neurons)
 
     # Setup simulator and seed RNG
     sim.setup(timestep=dt, min_delay=dt, max_delay=7.0 * dt, **setup_kwargs)
@@ -539,7 +524,7 @@ def test_discrete(connection_weight_filenames, hcu_biases,
 
     # Build HCUs configured for testing
     hcus = [HCU.testing_adaptive(name="%u" % i, sim=sim, rng=rng,
-                                 num_excitatory=num_excitatory, num_inhibitory=num_inhibitory, JE=JE, JI=JI, J_eff=J_eff,
+                                 num_excitatory=num_excitatory, num_inhibitory=num_inhibitory, JE=JE, JI=JI,
                                  bias=bias, tau_ca2=tau_ca2, i_alpha=i_alpha,
                                  e_cell_mean_firing_rate=e_cell_mean_firing_rate,
                                  simtime=testing_simtime, record_membrane=record_membrane,
