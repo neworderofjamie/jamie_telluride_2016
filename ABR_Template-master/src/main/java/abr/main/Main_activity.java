@@ -159,6 +159,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		// Add supported sensors
 		AddSensor("orientation", 3, 50008);
 		AddSensor("sonar", 3, 50009);
+		AddSensor("ir", 2, 50010);
 
 		// Create SpiNNaker event handler
 		m_SpiNNakerReceiverHandler =
@@ -232,6 +233,10 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 					ConvertSonar(m_ioio_thread.get_sonar1_reading()),
 					ConvertSonar(m_ioio_thread.get_sonar2_reading()),
 					ConvertSonar(m_ioio_thread.get_sonar3_reading()));
+
+			UpdateSensor("ir",
+					ConvertIR(m_ioio_thread.get_ir1_reading()),
+					ConvertIR(m_ioio_thread.get_ir2_reading()));
 		}
 
 		//if (event.sensor.getType() == Sensor.TYPE_GRAVITY)
@@ -350,6 +355,11 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		}
 	}
 
+	static private float ConvertIR(float ir) {
+		// Convert ir voltage to distance in CM
+		// **NOTE** this is a really rough fit to an inverse of the datasheet plot
+		return (70.0f - (50.0f * (float)Math.log(ir))) / 150.0f;
+	}
 	static private float ConvertSonar(int sonar)
 	{
 		// Give up representing beyond 12" (about 1m)

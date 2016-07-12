@@ -14,9 +14,11 @@ public class IOIO_thread extends BaseIOIOLooper
 
 	int pwm_pan, pwm_tilt, pwm_speed, pwm_steering;
 	private AnalogInput sonar1,sonar2,sonar3;
+	private AnalogInput ir1, ir2;
 	int sonarPulseCounter;
 	private DigitalOutput sonar_pulse;
 	int sonar1_reading, sonar2_reading, sonar3_reading;
+	float ir1_reading, ir2_reading;
 	static final int DEFAULT_PWM = 1500, MAX_PWM = 2000, MIN_PWM = 1000;
 
 	public IOIO_thread(Main_activity gui)
@@ -27,7 +29,10 @@ public class IOIO_thread extends BaseIOIOLooper
 		sonar1_reading = 1000;
 		sonar2_reading = 1000;
 		sonar3_reading = 1000;
-		
+
+		ir1_reading = 0.0f;
+		ir2_reading = 0.0f;
+
 		pwm_pan = 1500;
 		pwm_tilt= 1500;
 		pwm_speed = 1500;
@@ -55,6 +60,10 @@ public class IOIO_thread extends BaseIOIOLooper
 			sonar1 = ioio_.openAnalogInput(42);
 			sonar2 = ioio_.openAnalogInput(43);
 			sonar3 = ioio_.openAnalogInput(44);
+
+			ir1 = ioio_.openAnalogInput(36);
+			ir2 = ioio_.openAnalogInput(37);
+
 			sonar_pulse = ioio_.openDigitalOutput(40,false);
 		} 
 		catch (ConnectionLostException e){throw e;}
@@ -64,8 +73,11 @@ public class IOIO_thread extends BaseIOIOLooper
 	public void loop() throws ConnectionLostException 
 	{	
 		ioio_.beginBatch();
-		
+
 		try {
+			ir1_reading = ir1.getVoltage();
+			ir2_reading = ir2.getVoltage();
+
 			if (sonarPulseCounter==5){
 				sonar_pulse.write(true);
 				float reading1 = sonar1.getVoltage();
@@ -153,7 +165,6 @@ public class IOIO_thread extends BaseIOIOLooper
 	{
 		return pwm_speed;
 	}
-
 	public synchronized int get_steering()
 	{
 		return pwm_steering;
@@ -163,7 +174,6 @@ public class IOIO_thread extends BaseIOIOLooper
 	{
 		return pwm_pan;
 	}
-	
 	public synchronized int get_tilt()
 	{
 		return pwm_tilt;
@@ -172,15 +182,17 @@ public class IOIO_thread extends BaseIOIOLooper
 	public int get_sonar1_reading(){
 		return sonar1_reading;
 	}
-	
 	public int get_sonar2_reading(){
 		return sonar2_reading;
 	}
-	
 	public int get_sonar3_reading(){
 		return sonar3_reading;
 	}
-	
+
+	public float get_ir1_reading() { return ir1_reading; }
+	public float get_ir2_reading() { return ir2_reading; }
+
+
 	@Override
 	public void disconnected() {
 		Log.i("blar","IOIO_thread disconnected");
