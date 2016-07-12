@@ -520,7 +520,7 @@ def test_discrete(connection_weight_filenames, hcu_biases,
     rng = NumpyRNG(seed=1)
 
     # Calculate mean firing rate
-    e_cell_mean_firing_rate = (num_mcu_neurons / NE) * 20.0
+    e_cell_mean_firing_rate = (num_mcu_neurons / num_excitatory) * 20.0
 
     # Build HCUs configured for testing
     hcus = [HCU.testing_adaptive(name="%u" % i, sim=sim, rng=rng,
