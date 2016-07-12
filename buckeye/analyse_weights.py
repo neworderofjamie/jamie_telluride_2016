@@ -2,6 +2,7 @@ import argparse
 import copy
 import itertools
 import numpy
+import pickle
 import pylab
 import sys
 
@@ -70,6 +71,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_mcu_neurons", type=int, default=100, help="How many neurons make up an MCU")
     parser.add_argument("--num_mcu_per_hcu", type=int, default=10, help="How many MCUs make up each HCU")
     parser.add_argument("--selected_attractor", type=int, default=7, help="Which attractor to plot")
+    parser.add_argument("--label_filename", help="Name of file containing pickled list of labels")
     parser.add_argument("folder", nargs=1, help="Folder to search for weight files in")
     parser.add_argument("filename", nargs=1, help="Filenames of weight files are of the form connection_X_YYYY.npy where filename specified YYYY")
     args = parser.parse_args()
@@ -88,6 +90,22 @@ if __name__ == "__main__":
     mean_image = display_mean_weights(combined_masked_weights, figure, axes[1], args.num_mcu_neurons, "jet")
     axes[1].set_xlabel("Post-synaptic attractor number")
     axes[1].set_ylabel("Pre-synaptic attractor number")
+
+    # If label filename is specified
+    if args.label_filename is not None:
+        # Open label file
+        with open("%s/%s.pkl" % (args.folder[0], args.label_filename), "rb") as label_file:
+            # Load labels
+            labels = pickle.load(label_file)
+
+            axes[0].set_xticks(range(args.num_mcu_per_hcu))
+            axes[0].set_xticklabels(labels)
+
+            axes[1].set_xticks(range(args.num_mcu_per_hcu))
+            axes[1].set_yticks(range(args.num_mcu_per_hcu))
+            axes[1].set_yticklabels(labels)
+            axes[1].set_xticklabels(labels)
+
 
     figure.colorbar(mean_image, shrink=0.75)
     #display_raw_weights(combined_masked_weights, figure, axes[2])
