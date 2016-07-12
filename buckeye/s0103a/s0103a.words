@@ -1,0 +1,817 @@
+signal oS0103.sd
+type 0
+comment created using xlabel Sat Jun  3 11:17:13 2006
+comment created using xlabel Wed May 24 14:14:04 2000
+color 122
+font -misc-*-bold-*-*-*-15-*-*-*-*-*-*-*
+separator ;
+nfields 3
+#
+   7.038302 122 {B_TRANS}; B; B; null
+   7.493792 122 um; ah m; ah m; UH
+   11.342292 122 <SIL>; S; S; null
+   11.932632 122 oh; ow; ow; NN
+   12.318955 122 <VOCNOISE>; U; U; null
+   14.050902 122 <IVER>; S; S; null
+   14.441680 122 i; ay; ay; PRP
+   14.863941 122 was; w ah z; w ah z; VBD
+   15.140166 122 very; v eh r iy; v eh r iy; RB
+   15.472351 122 naive; n ay iy v; n ay iy v; JJ
+   15.608276 122 on; aa n; aa n; IN
+   15.836049 122 that; dh ae t; n ae dx; DT
+   15.947054 122 i; ay; ay; PRP
+   16.198185 122 mean; m iy n; m iy n; NN
+   16.523201 122 <VOCNOISE>; U; U; null
+   16.617028 122 i; ay; ay; PRP
+   17.071362 122 mean; m iy n; m iy n; VB
+   17.180310 122 you; y uw; y iy; PRP
+   17.330412 122 see; s iy; s iy; VBP
+   17.383938 122 it; ih t; ih dx; PRP
+   17.503160 122 on; aa n; aa n; IN
+   17.588481 122 the; dh iy; n ah; DT
+   17.903598 122 news; n uw z; n uw z; NN
+   18.016146 122 and; ae n d; ih n; CC
+   18.227876 122 you; y uw; y uw; PRP
+   18.759750 122 but; b ah t; b ah t; CC
+   19.747018 122 <SIL>; S; S; null
+   19.872197 122 the; dh iy; dh iy; DT
+   20.241125 122 actual; ae k ch uw el; ae k sh el; JJ
+   21.244228 122 relationships; r ih l ey sh ah n sh ih p s; r ih l ey sh ihn sh ih p s; NNS
+   21.924926 122 <EXT-and>; U; U; null
+   22.219584 122 all; aa l; aa l; DT
+   22.396611 122 uh; ah; ah; UH
+   22.591295 122 but; b ah t; b ah dx; CC
+   23.077273 122 again; ah g eh n; ah g eh n; RB
+   23.252490 122 do; d uw; d ah; VBP
+   23.310895 122 you; y uw; y uw; PRP
+   23.541125 122 need; n iy d; n iy d; VB
+   23.621125 122 to; t uw; t ah; TO
+   23.831125 122 know; n ow; n ow; VB
+   24.121125 122 that; dh ae t; dh ae t; IN
+   24.506733 122 unless; ah n l eh s; ih n l eh s; IN
+   24.594095 122 it; ih t; ih p; PRP
+   25.041125 122 pertains; p er t ey n z; p er t ey n s; VBZ
+   25.165333 122 to; t uw; t iy; TO
+   25.389568 122 you; y uw; y uw; PRP
+   25.481522 122 and; ae n d; eh n; CC
+   25.635996 122 then; dh eh n; n eh n; RB
+   25.857652 122 even; iy v ah n; iy v ah nx; RB
+   25.963980 122 if; ih f; ih f; IN
+   26.041105 122 it; ih t; ih t; PRP
+   26.208833 122 does; d ow z; d ah z; VBZ
+   26.518522 122 pertain; p er t ey n; p r t ey n; VB
+   26.626985 122 to; t uw; d iy; TO
+   26.786908 122 you; y uw; y uw; PRP
+   37.617853 122 <IVER>; S; S; null
+   37.816364 122 right; r ay t; r ay t; RB
+   38.214376 122 <IVER>; S; S; null
+   38.433771 122 right; r ay t; r ay t; RB
+   51.215125 122 <IVER>; S; S; null
+   51.331669 122 i; ay; ay; PRP
+   51.623283 122 think; th ih ng k; th ih ng k; VBP
+   51.668476 122 uh; ah; ih; UH
+   51.769708 122 <SIL>; S; S; null
+   51.885846 122 i; ay; ay; PRP
+   52.104135 122 didn't; d ih d en t; d ih n; VBP_RB
+   52.345125 122 know; n ow; n ow; VBP
+   52.455125 122 the; dh iy; dh ih; DT
+   52.965125 122 difference; d ih f ah r ah n s; d ih f r ah n s; NN
+   53.163529 122 so; s ow; s ow; IN
+   53.302055 122 it; ih t; ih t; PRP
+   53.482522 122 didn't; d ih d en t; d ih n; VBP_RB
+   53.871148 122 affect; ah f eh k t; ah f eh k; VB
+   53.915125 122 me; m iy; m iy; PRP
+   53.995125 122 at; ae t; ae t; IN
+   54.235125 122 all; aa l; ao l; DT
+   54.376963 122 it's; ih t s; ah s; PRP_VBZ
+   54.597488 122 just; jh ah s t; jh ih s; RB
+   54.704159 122 <SIL>; S; S; null
+   54.895125 122 they're; dh ey er; dh eh r; PRP_VBP
+   55.215125 122 just; jh ah s t; jh ah s t; RB
+   55.605125 122 another; ah n ah dh er; ah n ah dh er; DT
+   56.585125 122 person; p er s ah n; p er s ah n; NN
+   57.143761 122 <VOCNOISE>; U; U; null
+   57.536628 122 um; ah m; ah m; UH
+   58.163364 122 <VOCNOISE>; U; U; null
+   58.304379 122 i; ay; ay; PRP
+   58.530285 122 think; th ih ng k; th ih ng k; VBP
+   58.824561 122 more; m ow r; m ao r; RBR
+   58.964471 122 uh; ah; eh; UH
+   59.150856 122 as; ae z; eh z; IN
+   59.320591 122 i'm; ay m; ay m; PRP_VBP
+   59.474244 122 being; b iy ih ng; b iy nx; VBG
+   59.910889 122 exposed; eh k s p ow z d; ih k s p ow z; VBN
+   60.064536 122 to; t uw; t ih; TO
+   60.900949 122 patients; p ey sh ah n t s; p ey sh ah n t s; NNS
+   61.053886 122 with; w ih th; w ah th; IN
+   61.113625 122 the; dh iy; th ah; DT
+   61.397687 122 different; d ih f ah r ah n t; d ih f r en; JJ
+   62.279070 122 lifestyles; l ay f s t ay l s; tq l ay f s t ay el z; NNS
+   62.843787 122 <VOCNOISE>; U; U; null
+   63.020943 122 <SIL>; S; S; null
+   63.163753 122 and; ae n d; eh n; CC
+   63.523488 122 knowing; n ow ih ng; n ow ih ng; VBG
+   63.751260 122 how; hh aw; hh ae; WRB
+   63.845262 122 to; t uw; dx ih; TO
+   64.437727 122 educate; eh jh uh k ey t; eh jh ih k ey tq; VB
+   64.631239 122 their; dh eh r; dh eh r; PRP$
+   65.456785 122 caregivers; k ah r g ih v eh r z; k eh r g ih v ah r s; NNS
+   65.617671 122 and; ae n d; ah n; CC
+   65.879790 122 what; w ah t; w ah t; WP
+   66.097437 122 they; dh ey; dh ey; PRP
+   66.498043 122 need; n iy d; n iy d; VBP
+   66.793142 122 <VOCNOISE>; U; U; null
+   66.908836 122 <SIL>; S; S; null
+   67.289705 122 um; ah m; ah m; UH
+   68.606946 122 <SIL>; S; S; null
+   68.679391 122 i; ay; ay; PRP
+   68.920594 122 felt; f eh l t; f eh l t; VBD
+   69.274924 122 somewhat; s ah m w ah t; s ah m w ah dx; RB
+   69.432078 122 uh; ah; ae; UH
+   69.651150 122 ill; ih l; ih l; RB
+   70.203031 122 equipped; iy k w ih p t; ih k w ih p t; VBD
+   70.400272 122 the; dh iy; dh ah; DT
+   70.674084 122 first; f er s t; f er s; JJ
+   70.817954 122 few; f y uw; f y uw; JJ
+   71.263865 122 times; t ay m z; t ay m s; NNS
+   71.665691 122 but; b ah t; b ah t; CC
+   72.313097 122 <SIL>; S; S; null
+   72.734257 122 um; ah m; ah m; UH
+   73.760743 122 <SIL>; S; S; null
+   73.985000 122 knowing; n ow ih ng; n ow ih ng; VBG
+   74.103271 122 what; w ah t; w ah t; WP
+   74.199915 122 the; dh iy; dh ih; DT
+   75.017245 122 expectations; eh k s p eh k t ey sh ah n z; eh k s p eh k t ey sh en s; NNS
+   75.240724 122 are; aa r; aa r; VBP
+   75.521002 122 especially; ih s p eh sh ah l iy; s p eh sh; RB
+   75.692235 122 like; l ay k; l ay k; IN
+   75.767200 122 with; w ih th; w ih th; IN
+   76.078856 122 spinal; s p ay n el; s p ay n el; JJ
+   76.240473 122 cord; k ow r d; k ao r; NN
+   76.623030 122 injury; ih n jh ah r iy; ih n jh er iy; NN
+   77.234884 122 patients; p ey sh ah n t s; p ey sh ah n t s; NNS
+   77.295000 122 and; ae n d; en; CC
+   77.437558 122 when; w eh n; w eh n; WRB
+   77.523282 122 you; y uw; y ih; PRP
+   77.705540 122 go; g ow; g ow; VBP
+   77.888384 122 into; ih n t uw; ih n t ah; IN
+   78.561412 122 sexuality; s eh k sh uh ae l ah t iy; s eh k sh uw ae l ih t iy; NN
+   78.655015 122 and; ae n d; ih n; CC
+   78.994902 122 teaching; t iy ch ih ng; t iy ch eng; NN
+   79.183921 122 them; dh eh m; n eh m; PRP
+   79.528178 122 <VOCNOISE>; U; U; null
+   79.811721 122 after; ae f t er; ae f t er; IN
+   80.351406 122 injury; ih n jh ah r iy; ih n jh er iy; NN
+   80.822921 122 <VOCNOISE>; U; U; null
+   80.969346 122 <SIL>; S; S; null
+   81.083232 122 i; ay; ay; PRP
+   81.269375 122 mean; m iy n; m iy n; VBP
+   81.399375 122 as; ae z; eh z; IN
+   81.464191 122 a; ey; ah; DT
+   81.728148 122 nurse; n er s; nx ah r sh; NN
+   81.771578 122 you; y uw; y uw; PRP
+   81.909358 122 need; n iy d; n iy; VBP
+   81.999375 122 to; t uw; t ih; TO
+   82.107784 122 be; b iy; v iy; VB
+   82.315553 122 able; ey b el; ey b ao; JJ
+   82.740522 122 to; t uw; t uw; TO
+   83.254740 122 <SIL>; S; S; null
+   83.779375 122 educate; eh jh uh k ey t; eh d jh k ey; VB
+   84.238407 122 them; dh eh m; t dh eh m; PRP
+   85.246243 122 <SIL>; S; S; null
+   85.478404 122 i; ay; ay; PRP
+   85.778365 122 felt; f eh l t; f eh l t; VBD
+   86.149970 122 pretty; p r ih t iy; p r ih dx iy; RB
+   86.647388 122 <LAUGH>; U; U; null
+   87.396407 122 <IVER>; S; S; null
+   88.089060 122 inadequate; ih n ae d ih k w ah t; ih nx ae dx ih k w ih tq; JJ
+   88.788660 122 <SIL>; S; S; null
+   88.919058 122 but; b ah t; b ah; CC
+   89.034715 122 the; dh iy; dh iy; DT
+   89.090791 122 uh; ah; ih; UH
+   89.257411 122 that; dh ae t; dh ae; WDT
+   89.392196 122 was; w ah z; w ah z; VBD
+   89.625811 122 even; iy v ah n; iy v ih n; RB
+   89.759375 122 through; th r uw; th r uw; IN
+   90.126021 122 nursing; n er s ih ng; n ah r s ih n; NN
+   90.319375 122 school; s k uw l; s k ao; NN
+   90.388667 122 i; ay; ay; PRP
+   90.531349 122 mean; m iy n; m iy n; VBP
+   90.868833 122 those; dh ow z; n ow z; DT
+   91.142357 122 weren't; w er n t; w er n t; VBP_RB
+   91.449375 122 things; th ih ng z; th ih ng z; NNS
+   91.628674 122 that; dh ae t; dh ae tq; WDT
+   91.756432 122 were; w er; w ah r; VBD
+   92.469375 122 discussed; d ih s k ah s t; d ih s k ah s t; VBN
+   93.109375 122 <SIL>; S; S; null
+   93.226971 122 you; y uw; y ih; PRP
+   93.299375 122 go; g ow; g ow; VBP
+   93.369375 122 to; t uw; dx ah; TO
+   93.723876 122 special; s p eh sh el; s p eh sh ah l; JJ
+   94.377771 122 conferences; k aa n f ah r ah n s ah z; k aa n f en s ih s; NNS
+   94.552047 122 to; t uw; t ih; TO
+   94.942370 122 get; g eh t; g ih t; VB
+   95.383834 122 <SIL>; S; S; null
+   96.003880 122 information; ih n f ow r m ey sh ah n; ih n f er m ey sh en; NN
+   96.143074 122 on; aa n; aa n; IN
+   96.591705 122 that; dh ae t; n ae t; DT
+   109.392695 122 <IVER>; S; S; null
+   109.562250 122 that; dh ae t; dh ae; WDT
+   109.691154 122 would; w uh d; uh d; MD
+   109.822250 122 be; b iy; b iy; VB
+   110.229854 122 fine; f ay n; f ay n; JJ
+   110.365627 122 but; b ah t; b ah dx; CC
+   110.719745 122 again; ah g eh n; aa g eh n; RB
+   110.790246 122 uh; ah; ah; UH
+   111.162635 122 <VOCNOISE>; U; U; null
+   114.174788 122 <SIL>; S; S; null
+   114.254254 122 i; ay; ay; PRP
+   114.453142 122 don't; d ow n t; dx ow n; VBP_RB
+   115.343244 122 <SIL>; S; S; null
+   115.592429 122 it's; ih t s; ih t s; PRP_VBZ
+   115.885525 122 just; jh ah s t; jh ih s t; RB
+   116.192250 122 another; ah n ah dh er; en ah dh er; DT
+   116.824597 122 person; p er s ah n; p r s ih n; NN
+   117.043524 122 with; w ih th; w ih th; IN
+   117.068458 122 a; ey; ah; DT
+   117.376030 122 different; d ih f ah r ah n t; d ih f r ah nx; JJ
+   117.912250 122 lifestyle; l ay f s t ay l; l ay f s t ay l; NN
+   118.116990 122 it's; ih t s; ah s; PRP_VBZ
+   118.345991 122 like; l ay k; l ay k; IN
+   118.530350 122 they're; dh ey er; dh eh r; PRP_VBP
+   118.798967 122 they're; dh ey er; dh eh r; PRP_VBP
+   119.152250 122 they're; dh ey er; dh eh r; PRP_VBP
+   119.312250 122 the; dh iy; dh ah; DT
+   119.634331 122 same; s ey m; s ey m; JJ
+   119.792250 122 as; ae z; ae s; IN
+   120.193166 122 me; m iy; m iy; PRP
+   120.366003 122 it's; ih t s; ih s; PRP_VBZ
+   120.672067 122 just; jh ah s t; jh ah s; RB
+   123.438656 122 <VOCNOISE>; U; U; null
+   137.360187 122 <IVER>; S; S; null
+   137.496598 122 i; ay; ay; PRP
+   137.720064 122 <SIL>; S; S; null
+   137.992334 122 think; th ih ng k; th ih ng; VB
+   138.889621 122 <SIL>; S; S; null
+   139.268514 122 they; dh ey; dh ey; PRP
+   139.716590 122 need; n iy d; n iy d; VBP
+   139.900977 122 to; t uw; t ah; TO
+   140.793330 122 educate; eh jh uh k ey t; eh jh ih k ey t; VB
+   142.466033 122 <SIL>; S; S; null
+   142.960187 122 me; m iy; em m iy; PRP
+   143.143859 122 on; aa n; aa n; IN
+   143.389445 122 what's; w ah t s; w ah t s; NNS
+   143.807358 122 important; ih m p ow r t en t; ih m p ao r ih n; JJ
+   143.963771 122 to; t uw; t ah; TO
+   144.495425 122 them; dh eh m; dh eh m; PRP
+   145.074732 122 <VOCNOISE>; U; U; null
+   145.211771 122 and; ae n d; eh n; CC
+   145.503218 122 i'll; ay l; aw; PRP_MD
+   146.636384 122 <SIL>; S; S; null
+   147.107847 122 yknow; y uw n ow; y ih n ow; PRP_VBP
+   148.527991 122 <SIL>; S; S; null
+   148.745562 122 i'll; ay l; aa l; PRP_MD
+   149.067335 122 honor; aa n er; aa nx ah r; NN
+   149.120499 122 and; ae n d; en; CC
+   149.634929 122 respect; r ih s p eh k t; r iy s p eh k t; NN
+   149.762456 122 as; ae z; ih s; RB
+   150.005587 122 much; m ah ch; m ah ch; JJ
+   150.120187 122 as; ae z; ih s; IN
+   150.226122 122 i; ay; ay; PRP
+   150.823275 122 can; k ae n; k ae n; MD
+   151.362724 122 <VOCNOISE>; U; U; null
+   151.799722 122 <SIL>; S; S; null
+   152.120187 122 but; b ah t; b ah t; CC
+   153.285662 122 <SIL>; S; S; null
+   153.597555 122 even; iy v ah n; iy v ah n; RB
+   153.876853 122 people; p iy p el; p iy p el; NNS
+   154.240658 122 within; w ih th ih n; w ih th ih n; IN
+   154.826334 122 different; d ih f ah r ah n t; d ih f r eh n t; JJ
+   155.415457 122 <SIL>; S; S; null
+   155.479370 122 i; ay; ay; PRP
+   155.709932 122 mean; m iy n; m iy n; VBP
+   155.976585 122 <SIL>; S; S; null
+   156.055130 122 a; ey; ay; DT
+   156.537131 122 catholic; k ae th ah l ih k; k ae th l ih k; JJ
+   156.743821 122 isn't; ih z ah n t; ih z n; VBZ_RB
+   156.809166 122 a; ey; ah; DT
+   157.364260 122 catholic; k ae th ah l ih k; k ae th l ih k; NN
+   157.409708 122 in; ih n; ih; IN
+   157.625092 122 my; m ay; m ay; PRP$
+   158.104597 122 opinion; ah p ih n y ah n; ah p ih n y ih n; NN
+   158.199657 122 i; ay; ay; PRP
+   158.388388 122 mean; m iy n; m iy n; VBP
+   158.887772 122 <VOCNOISE>; U; U; null
+   159.169813 122 there's; dh eh r z; dh eh r z; EX_VBZ
+   159.558688 122 some; s ah m; s ah m; DT
+   160.155122 122 <SIL>; S; S; null
+   160.440542 122 old; ow l d; ow l d; JJ
+   160.966473 122 time; t ay m; t ay m; NN
+   161.693227 122 <SIL>; S; S; null
+   162.293946 122 catholics; k ae th ah l ih k s; k ae th l ih k s; NNS
+   162.343579 122 i; ay; ah; PRP
+   162.646160 122 mean; m iy n; m iy n; VBP
+   163.185923 122 <SIL>; S; S; null
+   163.429307 122 like; l ay k; l ay k; IN
+   163.591565 122 my; m ay; m ay; PRP$
+   164.260312 122 mom; m aa m; m aa m; NN
+   164.880525 122 <LAUGH>; U; U; null
+   164.940773 122 i; ay; ay; PRP
+   165.149558 122 mean; m iy n; m iy n; VBP
+   165.354338 122 that; dh ae t; dh eh; IN
+   165.678562 122 they; dh ey; dh ey; PRP
+   166.055663 122 just; jh ah s t; jh ah s t; RB
+   166.230312 122 are; aa r; aa r; VBP
+   166.670151 122 very; v eh r iy; v eh r iy; RB
+   167.280312 122 strict; s t r ih k t; s t r ih k t; JJ
+   168.327653 122 catholics; k ae th ah l ih k s; k ae th l ih k s; NNS
+   168.748982 122 <SIL>; S; S; null
+   168.942799 122 and; ae n d; eh n; CC
+   169.202067 122 abide; ah b ay d; b ay b; NN
+   169.395020 122 by; b ay; b ay; IN
+   169.500396 122 the; dh iy; dh iy; DT
+   169.601553 122 <VOCNOISE>; U; U; null
+   169.920312 122 old; ow l d; ow l; JJ
+   170.260312 122 rules; r uw l z; d r uw l z; NNS
+   170.592027 122 before; b ih f ow r; b ih f ao r; IN
+   170.689682 122 the; dh iy; dh ah; DT
+   171.323832 122 vatican; v ae t ih k ah n; v ae dx ih k eh n; NNP
+   171.906774 122 <VOCNOISE>; U; U; null
+   172.258191 122 and; ae n d; ae n; CC
+   172.608248 122 <SIL>; S; S; null
+   172.714400 122 i; ay; ay; PRP
+   172.940287 122 think; th ih ng k; th ih ng k; VBP
+   173.130312 122 there's; dh eh r z; dh eh r z; EX_VBZ
+   173.203206 122 a; ey; ah; DT
+   173.420312 122 new; n uw; n uw; JJ
+   174.048496 122 modern; m aa d er n; m aa dx r n; JJ
+   174.894244 122 <SIL>; S; S; null
+   175.172852 122 age; ey jh; ey jh; NN
+   175.292017 122 of; ah v; ah f; IN
+   175.949870 122 catholics; k ae th ah l ih k s; k ae th l ih k s; NNS
+   176.029991 122 so; s ow; ow; RB
+   176.250063 122 even; iy v ah n; iy v en; RB
+   176.387860 122 if; ih f; ih f; IN
+   176.449908 122 you; y uw; y ih; PRP
+   176.741483 122 say; s ey; s ey; VBP
+   177.066816 122 <VOCNOISE>; U; U; null
+   177.281547 122 i'm; ay m; ay m; PRP_VBP
+   177.753010 122 jewish; jh uw ih sh; jh uw ih sh; NNP
+   177.835129 122 or; ow r; er; CC
+   178.009420 122 i'm; ay m; ay m; PRP_VBP
+   178.347443 122 gay; g ey; g ey; NN
+   178.492427 122 or; ow r; er; CC
+   178.745564 122 i'm; ay m; ay m; PRP_VBP
+   179.145810 122 <VOCNOISE>; U; U; null
+   179.544868 122 <SIL>; S; S; null
+   179.961449 122 african; ae f r ih k ah n; ae f r ih k ah nx; JJ
+   180.375013 122 american; ah m eh r ih k ah n; ah m eh r ih k ih n; JJ
+   180.510556 122 or; ow r; er; CC
+   181.130063 122 whatever; w ah t eh v er; w ah dx eh v ah r; WDT
+   181.633589 122 <VOCNOISE>; U; U; null
+   181.714962 122 i; ay; ay; PRP
+   182.035483 122 still; s t ih l; s t ih l; RB
+   182.400699 122 think; th ih ng k; th ih ng k; VBP
+   182.581603 122 they're; dh ey er; dh eh r; PRP_VBP
+   183.203793 122 varying; v eh r iy ah ng; v eh r iy ng; VBG
+   183.351407 122 <SIL>; S; S; null
+   183.480063 122 they're; dh ey er; dh eh r; PRP_VBP
+   183.769754 122 still; s t ih l; s t ih l; RB
+   183.860908 122 a; ey; ah; DT
+   184.475388 122 person; p er s ah n; p er s ah n; NN
+   184.704502 122 with; w ih th; w ih th; IN
+   185.024172 122 different; d ih f ah r ah n t; d ih f r ah n; JJ
+   185.302461 122 needs; n iy d z; n iy d z; NNS
+   185.430161 122 and; ae n d; eh n; CC
+   185.842577 122 wants; w aa n t s; w aa n t s; VBZ
+   186.047652 122 and; ae n d; eh n d; CC
+   186.375042 122 <VOCNOISE>; U; U; null
+   186.496118 122 what; w ah t; w ah t; WP
+   186.644647 122 their; dh eh r; dh eh r; PRP$
+   187.257800 122 traditions; t r ah d ih sh ah n z; ch er d ih sh ah n s; NNS
+   187.374989 122 and; ae n d; eh n; CC
+   187.945216 122 culture; k ah l ch er; k ah l ch er; NN
+   188.199806 122 and; ae n d; eh n; CC
+   188.692279 122 <SIL>; S; S; null
+   188.995334 122 family; f ae m ah l iy; f ae m l iy; NN
+   189.464835 122 values; v ae l y uw z; v ae ay y uw z; NNS
+   189.748937 122 are; aa r; aa r; VBP
+   189.961381 122 still; s t ih l; s t ih l; RB
+   190.124389 122 gonna; g ah n ah; g ah n ah; VBG_TO
+   190.249841 122 be; b iy; b iy; VB
+   190.568937 122 very; v eh r iy; v eh r iy; RB
+   191.218937 122 different; d ih f ah r ah n t; d ih f r eh n t; JJ
+   191.631431 122 <VOCNOISE>; U; U; null
+   191.758937 122 and; ae n d; eh n; CC
+   191.850877 122 you; y uw; y uw; PRP
+   192.012846 122 need; n iy d; n iy; VBP
+   192.110539 122 to; t uw; d ah; TO
+   192.408937 122 find; f ay n d; f ay n d; VB
+   192.554630 122 out; aw t; aw tq; RP
+   192.718290 122 from; f r ah m; f r en; IN
+   192.833490 122 that; dh ae t; ae dx; DT
+   193.326008 122 individual; ih n d ih v ih jh uw el; ih n d ih v ih jh ah l; JJ
+   193.764921 122 person; p er s ah n; p ah r s en; NN
+   193.938937 122 what; w ah t; w ah dx; WP
+   194.058937 122 it; ih t; ih d; PRP
+   194.407741 122 is; ih z; ih s; VBZ
+   194.828937 122 <SIL>; S; S; null
+   195.014367 122 that; dh ae t; dh ae t; IN
+   195.152498 122 they; dh ey; dh ey; PRP
+   195.598937 122 need; n iy d; n iy d; VBP
+   198.473731 122 <IVER>; S; S; null
+   198.721745 122 no; n ow; ng ah; DT
+   199.643932 122 <LAUGH>; U; U; null
+   202.848128 122 <IVER>; S; S; null
+   203.079723 122 uh; ah; eh; UH
+   203.183639 122 oh; ow; ow; UH
+   203.601648 122 yes; y eh s; y eh s; UH
+   204.253699 122 <SIL>; S; S; null
+   204.593700 122 yes; y eh s; y eh s; UH
+   214.194125 122 <IVER>; S; S; null
+   214.304125 122 well; w eh l; w eh l; RB
+   214.534125 122 just; jh ah s t; jh ah s; RB
+   214.716370 122 like; l ay k; l ay k; IN
+   215.157678 122 premarital; p r iy m ae r ih t el; p r iy m ae r ih dx el; JJ
+   215.544125 122 sex; s eh k s; s eh k s; NN
+   215.594194 122 i; ay; ay; PRP
+   215.714817 122 mean; m iy n; m iyn; VBP
+   215.864125 122 there; dh eh r; n eh r; EX
+   216.010556 122 was; w ah z; w ah z; VBD
+   216.132571 122 no; n ow; n ow; DT
+   216.319538 122 way; w ey; w ey; NN
+   216.413051 122 i; ay; aa; PRP
+   216.528354 122 would; w uh d; uh d; MD
+   216.884125 122 ever; eh v er; eh v ah r; RB
+   217.734526 122 discuss; d ih s k ah s; d ih s k ah s; VB
+   218.086603 122 anything; eh n iy th ih ng; eh n iy th ih ng; NN
+   218.294125 122 like; l ay k; l ay k; IN
+   218.464125 122 that; dh ae t; dh ae dx; DT
+   218.784125 122 ever; eh v er; eh v ah r; RB
+   219.119919 122 with; w ih th; w ih th; IN
+   219.352264 122 her; hh er; hh er; PRP$
+   219.456901 122 i; ay; ay; PRP
+   219.575786 122 mean; m iy n; m iy n; NN
+   219.743734 122 that; dh ae t; n ae tq; WDT
+   219.880631 122 was; w ah z; w ah z; VBD
+   220.030319 122 just; jh ah s t; zh ah s; RB
+   220.364490 122 something; s ah m th ih ng; s ah m th ih ng; NN
+   220.473471 122 that; dh ae t; n ih tq; WDT
+   220.577862 122 you; y uw; y uw; PRP
+   220.868719 122 didn't; d ih d en t; d ih n; VBP_RB
+   221.831606 122 <IVER>; S; S; null
+   222.101891 122 right; r ay t; r ay tq; RB
+   222.224498 122 you; y uw; y uw; PRP
+   222.450078 122 don't; d ow n t; dx own tq; VBP_RB
+   223.020313 122 <IVER>; S; S; null
+   223.390625 122 no; n ow; n ow; DT
+   223.670625 122 no; n ow; n ow; DT
+   224.100625 122 <SIL>; S; S; null
+   224.730625 122 no; n ow; n ow; DT
+   225.260625 122 but; b ah t; b ah t; CC
+   230.726813 122 <IVER>; S; S; null
+   231.116813 122 okay; ow k ey; ow k ey; NN
+   237.293931 122 <IVER>; S; S; null
+   237.427615 122 should; sh uh d; sh uh; MD
+   237.585437 122 <SIL>; S; S; null
+   237.861166 122 be; b iy; b iy; VB
+   239.094636 122 <LAUGH>; U; U; null
+   239.354636 122 but; b ah t; b ah t; CC
+   239.534636 122 is; ih z; ih z; VBZ
+   239.774636 122 it; ih t; ih t; PRP
+   243.640692 122 <IVER>; S; S; null
+   243.990016 122 um-hum; em hh em; em hh em; UH
+   244.503775 122 <IVER>; S; S; null
+   244.868822 122 um-hum; em hh em; em hh em m; UH
+   247.685199 122 <IVER>; S; S; null
+   248.125627 122 um-hum; em hh em; em hh em; UH
+   250.671170 122 <SIL>; S; S; null
+   251.111313 122 taboo; t ah b uw; t ae b uw; JJ
+   251.531354 122 yeah; y ae; y eh; UH
+   259.459749 122 <IVER>; S; S; null
+   259.769125 122 sure; sh uw r; sh ah r; JJ
+   260.838296 122 <IVER>; S; S; null
+   261.131874 122 sure; sh uw r; sh er; JJ
+   267.760959 122 <IVER>; S; S; null
+   267.917264 122 it; ih t; ih t; PRP
+   268.075627 122 took; t uh k; t uh k; VBD
+   268.245299 122 us; ah s; ah s; PRP
+   268.519863 122 ten; t eh n; t eh n; JJ
+   268.773375 122 years; y ih r z; y iy r s; NNS
+   268.870523 122 to; t uw; t ah; TO
+   269.061792 122 have; hh ae v; hh ae v; VB
+   269.407106 122 <EXCLUDE-name>; U; U; null
+   269.514255 122 and; ae n d; eh n; CC
+   269.691509 122 i; ay; ay; PRP
+   270.063381 122 think; th ih ng k; th ih ng k; VBP
+   270.181639 122 my; m ay; m ay; PRP$
+   270.642329 122 mom; m aa m; m aa m; NN
+   271.430651 122 <SIL>; S; S; null
+   271.952635 122 genuinely; jh eh n y uh ih n l iy; jh eh n uw ih l iy; RB
+   272.249821 122 thought; th aa t; th ao dx; VBN
+   272.388753 122 i; ay; ay; PRP
+   272.816439 122 was; w ah z; w ah z; VBD
+   273.521500 122 doing; d uw ih ng; d uw ih ng; VBG
+   273.701500 122 birth; b er th; b er th; NN
+   274.301500 122 control; k ah n t r ow l; k ah n t r ow l; NN
+   274.421500 122 and; ae n d; eh n; CC
+   274.551500 122 we; w iy; w iy; PRP
+   274.951500 122 weren't; w er n t; w ah r n t; VBP_RB
+   275.620503 122 but; b ah t; b ah tq; CC
+   275.951500 122 you; y uw; y uw; PRP
+   276.291500 122 always; aa l w ey z; ao l w ey z; RB
+   276.551500 122 knew; n uw; n uw; VBD
+   276.661500 122 the; dh iy; dh ah; DT
+   276.951500 122 subtle; s ah t el; s ah t el; JJ
+   277.781500 122 undertones; ah n d er t ow n z; ah n d ah r t ow n z; NNS
+   278.391500 122 undertones; ah n d er t ow n z; ah n d ah r t ow n z; NNS
+   278.781500 122 you; y uw; y uw; PRP
+   279.011500 122 <SIL>; S; S; null
+   279.261500 122 know; n ow; n ow; VB
+   279.461500 122 is; ih z; ih z; VBZ
+   279.711500 122 she; sh iy; sh iy; PRP
+   279.891500 122 or; ow r; ao r; CC
+   280.201500 122 isn't; ih z ah n t; ih z ih n t; VBZ_RB
+   280.401500 122 she; sh iy; sh iy; PRP
+   280.491500 122 it; ih t; ih t; PRP
+   280.641500 122 was; w ah z; w ah z; VBD
+   280.861500 122 just; jh ah s t; jh ah s t; RB
+   281.151500 122 like; l ay k; l ay k; IN
+   281.241500 122 well; w eh l; w eh l; RB
+   281.301627 122 i'm; ay m; ay m; PRP_VBP
+   281.441500 122 not; n aa t; n aa t; RB
+   281.651500 122 gonna; g ah n ah; g ao n ah; VBG_TO
+   282.031500 122 discuss; d ih s k ah s; d ih s k ah; VB
+   282.191500 122 it; ih t; s ih t; PRP
+   282.411500 122 with; w ih th; w ih dh; IN
+   282.501500 122 her; hh er; hh ah r; PRP$
+   282.851500 122 because; b ih k ah z; b iy k ao z; IN
+   282.972280 122 i; ay; ay; PRP
+   283.451500 122 knew; n uw; n uw; VBD
+   284.146794 122 <SIL>; S; S; null
+   284.442625 122 that; dh ae t; th ae t; DT
+   284.612625 122 was; w ah z; w ah z; VBD
+   284.662625 122 a; ey; ey; DT
+   284.862625 122 no; n ow; n ow; RB
+   285.212625 122 no; n ow; n ow; DT
+   285.392625 122 to; t uw; t ah; TO
+   285.772625 122 her; hh er; hh ah r; PRP
+   286.420210 122 but; b ah t; b ah tq; CC
+   287.102546 122 <SIL>; S; S; null
+   287.199572 122 i; ay; ay; PRP
+   287.674569 122 wasn't; w ah z ah n t; w ah z en t; NN
+   287.985203 122 but; b ah t; b ah tq; CC
+   288.179989 122 <SIL>; S; S; null
+   288.410971 122 she; sh iy; t sh iy; PRP
+   288.520307 122 didn't; d ih d en t; dx ih n; VBP_RB
+   288.637608 122 need; n iy d; n iy; NN
+   288.747668 122 to; t uw; d ih; TO
+   288.935931 122 know; n ow; n ow; VB
+   289.576025 122 <LAUGH-that>; U; U; null
+   292.859924 122 <IVER>; S; S; null
+   293.156887 122 it; ih t; ih; PRP
+   293.478517 122 was; w ah z; w ah z; VBD
+   294.170244 122 right; r ay t; r ay tq; JJ
+   294.956551 122 <IVER>; S; S; null
+   295.129751 122 i; ay; ay; PRP
+   295.422625 122 mean; m iy n; m iy n; NN
+   295.532625 122 if; ih f; ih f; IN
+   295.622002 122 i; ay; ay; PRP
+   295.762625 122 would; w uh d; w uh d; MD
+   295.922625 122 have; hh ae v; hh ae v; VB
+   296.322625 122 chosen; ch ow z ah n; ch ow z ah n; VBN
+   296.472625 122 to; t uw; t uw; TO
+   296.592625 122 do; d uw; d ah; VB
+   296.722625 122 that; dh ae t; dh ae t; DT
+   297.082625 122 well; w eh l; w eh l; RB
+   297.572625 122 <SIL>; S; S; null
+   297.832625 122 it's; ih t s; ih t s; PRP_VBZ
+   298.212625 122 my; m ay; m ay; PRP$
+   298.622625 122 choice; ch oy s; ch oy s; NN
+   325.015000 122 <SIL>; S; S; null
+   325.045000 122 oh; ow; ow; UH
+   325.202676 122 god; g aa d; g aa d; NN
+   325.405000 122 my; m ay; m ay; PRP$
+   325.845000 122 husband's; hh ah z b ah n d z; hh ah z b ah n d z; NNS
+   325.875000 122 a; ey; ah; DT
+   326.045000 122 lot; l aa t; l aa t; NN
+   326.395000 122 better; b eh t er; b eh t ah r; RBR
+   326.525000 122 at; ae t; ae t; IN
+   326.665000 122 these; dh iy z; dh iy z; DT
+   326.925000 122 type; t ay p; t ay p; NN
+   326.985000 122 of; ah v; ah v; IN
+   327.305000 122 questions; k w eh s ch ah n z; k w eh s ch ah n z; NNS
+   327.465000 122 cause; k aa z; k ah z; NN
+   327.625000 122 he; hh iy; hh iy; PRP
+   327.855000 122 was; w ah z; w ah z; VBD
+   328.374965 122 methodist; m eh th ah d ih s t; m eh th ah d ih s t; NN
+   328.445000 122 and; ae n d; eh n; CC
+   328.625000 122 he; hh iy; hh iy; PRP
+   329.075000 122 chose; ch ow z; ch ow z; VBD
+   329.585000 122 to; t uw; t uw; TO
+   330.134301 122 turn; t er n; t ah r n; VB
+   330.526279 122 catholic; k ae th ah l ih k; k ae th ah l ih k; JJ
+   330.615000 122 when; w eh n; w eh n; WRB
+   330.725000 122 we; w iy; w iy; PRP
+   330.895000 122 got; g aa t; g aa t; VBD
+   331.285000 122 married; m ae r iy d; m eh r iy d; VBN
+   331.735000 122 and; ae n d; ae n; CC
+   331.915000 122 his; hh ih z; hh ih z; PRP$
+   332.455000 122 perception; p er s eh p sh ah n; p ah r s eh p sh ah n; NN
+   332.565000 122 of; ah v; ah v; IN
+   332.625000 122 the; dh iy; dh ah; DT
+   333.183526 122 methodist; m eh th ah d ih s t; m eh th ah d ih s t; NN
+   333.675000 122 religion; r ih l ih jh ah n; r ih l ih jh ah n; NN
+   333.785000 122 and; ae n d; eh n; CC
+   333.855000 122 the; dh iy; dh iy; DT
+   334.286529 122 catholic; k ae th ah l ih k; k ae th ah l ih k; JJ
+   334.755000 122 religion; r ih l ih jh ah n; r ih l ih jh ah n; NN
+   335.035000 122 and; ae n d; ae n; CC
+   335.215000 122 the; dh iy; dh ah; DT
+   335.375000 122 more; m ow r; m ao r; JJR
+   335.444232 122 i; ay; ay; PRP
+   335.595000 122 was; w ah z; w ah z; VBD
+   335.975000 122 exposed; eh k s p ow z d; ih k s p ow z d; VBN
+   336.035000 122 to; t uw; t ah; TO
+   336.395000 122 his; hh ih z; hh ih z; PRP$
+   336.585000 122 it's; ih t s; ih t s; PRP_VBZ
+   336.925000 122 like; l ay k; l ay k; IN
+   337.455195 122 <SIL>; S; S; null
+   337.743879 122 boy; b oy; b oy; NN
+   337.923250 122 these; dh iy z; iy z; DT
+   338.168813 122 really; r iy l iy; r ah l iy; RB
+   338.283365 122 are; aa r; aa r; VBP
+   338.776322 122 similar; s ih m ih l er; s ih m l er; JJ
+   338.920572 122 but; b ah t; b iy tq; CC
+   339.152625 122 yours; y ow r z; y er z; NNS
+   339.268813 122 is; ih z; ih z; VBZ
+   339.333250 122 a; ey; ah; DT
+   339.518893 122 lot; l aa t; l aa tq; NN
+   340.018813 122 looser; l uw s er; l uw s er; JJR
+   340.178813 122 then; dh eh n; dh eh n; RB
+   340.608813 122 mine; m ay n; m ay n; NN
+   340.738813 122 and; ae n d; ae n; CC
+   341.460233 122 <LAUGH>; U; U; null
+   341.960562 122 just; jh ah s t; jh ah s t; RB
+   342.290562 122 teaching; t iy ch ih ng; t iy ch ih ng; VBG
+   342.650562 122 him; hh ih m; hh ih m; PRP
+   343.305005 122 <SIL>; S; S; null
+   343.710562 122 to; t uw; t uw; TO
+   345.598641 122 <SIL>; S; S; null
+   345.790562 122 be; b iy; b iy; VB
+   346.630562 122 honest; aa n ah s t; aa n ih s t; JJ
+   347.410562 122 and; ae n d; ae n d; CC
+   348.250562 122 open; ow p ah n; ow p ah n eh; JJ
+   348.410562 122 and; ae n d; n; CC
+   348.760562 122 being; b iy ih ng; b iy ih ng; VBG
+   349.030562 122 able; ey b el; ey b el; JJ
+   349.134595 122 to; t uw; t ah; TO
+   349.400562 122 talk; t aa k; t ao k; VB
+   350.090562 122 about; ah b aw t; ah b aw t; IN
+   350.620562 122 sex; s eh k s; s eh k s; NN
+   350.950562 122 and; ae n d; eh n; CC
+   351.480562 122 drugs; d r ah g z; d r ah g z; NNS
+   352.050562 122 and; ae n d; ae n d; CC
+   352.756283 122 <VOCNOISE>; U; U; null
+   353.555431 122 <UNKNOWN>; U; U; null
+   353.689250 122 uh; ah; ah; UH
+   354.119438 122 being; b iy ih ng; b iy ih ng; VBG
+   354.409438 122 there; dh eh r; dh eh r; RB
+   354.539438 122 and; ae n d; eh n; CC
+   354.869438 122 open; ow p ah n; ow p ih n; JJ
+   354.989438 122 and; ae n d; eh n; CC
+   355.319438 122 keeping; k iy p ih ng; k iy p ih ng; VBG
+   355.379438 122 the; dh iy; dh ah; DT
+   355.659438 122 lines; l ay n z; l ay n z; NNS
+   355.719438 122 of; ah v; ah v; IN
+   356.775785 122 communication; k ah m y uw n ih k ey sh ah n; k ah m y uw n ah k ey sh aa n; NN
+   357.096886 122 <SIL>; S; S; null
+   357.509438 122 open; ow p ah n; ow p eh; JJ
+   357.759438 122 and; ae n d; n d; CC
+   358.095339 122 <VOCNOISE>; U; U; null
+   358.149096 122 and; ae n d; en; CC
+   358.329438 122 then; dh eh n; n eh n; RB
+   358.449438 122 it; ih t; ih t; PRP
+   358.679438 122 goes; g ow z; g ow z; VBZ
+   358.989438 122 back; b ae k; b ae k; RB
+   359.119438 122 to; t uw; t ah; TO
+   359.269438 122 the; dh iy; dh iy; DT
+   359.639438 122 family; f ae m ah l iy; f ae m l iy; NN
+   359.889438 122 being; b iy ih ng; b iy ih ng; VBG
+   360.549438 122 available; ah v ey l ah b el; ah v ey l ah b ah l; JJ
+   360.810298 122 and; ae n d; eh n d; CC
+   361.099399 122 <VOCNOISE>; U; U; null
+   361.776408 122 <SIL>; S; S; null
+   362.084122 122 doing; d uw ih ng; d uw ih ng; VBG
+   362.745545 122 meaningful; m iy n ih ng f uh l; m iy nx ih ng f el; JJ
+   363.596104 122 <SIL>; S; S; null
+   363.900280 122 things; th ih ng z; th ih ng z; NNS
+   364.046281 122 with; w ih th; w ih dh; IN
+   364.120609 122 the; dh iy; dh ah; DT
+   364.704962 122 children; ch ih l d r ah n; ch ih l d r eh n; NNS
+   374.677378 122 <IVER>; S; S; null
+   374.814251 122 that; dh ae t; dh ae; IN
+   374.989188 122 he; hh iy; hh iy; PRP
+   375.359188 122 didn't; d ih d en t; d ih d en t; VBP_RB
+   384.023496 122 <IVER>; S; S; null
+   384.766614 122 i'm; ay m; ay m; PRP_VBP
+   385.225688 122 gonna; g ah n ah; g ao n ah; VBG_TO
+   385.405688 122 let; l eh t; l eh t; VBD
+   385.705688 122 him; hh ih m; hh ih m; PRP
+   386.095688 122 choose; ch uw z; ch uw z; VB
+   386.225327 122 i; ay; ay; PRP
+   386.598011 122 really; r iy l iy; r iy l iy; RB
+   386.805688 122 am; ae m; ae m; VBP
+   386.931748 122 i; ay; ay; PRP
+   387.275688 122 think; th ih ng k; th ih ng k; VBP
+   387.415688 122 as; ae z; ae z; IN
+   387.695688 122 long; l aa ng; l ao ng; JJ
+   387.876701 122 i; ay; ay; PRP
+   388.165688 122 mean; m iy n; m iy n; VBP
+   388.298719 122 i; ay; ay; PRP
+   388.575688 122 really; r iy l iy; r iy l iy; RB
+   388.885688 122 don't; d ow n t; d ow n; VBP_RB
+   389.215688 122 care; k eh r; k eh r; NN
+   389.925688 122 <SIL>; S; S; null
+   390.185688 122 what; w ah t; w ah t; WP
+   390.575688 122 religion; r ih l ih jh ah n; r ih l ih jh ah n; NN
+   390.665688 122 what; w ah t; w ah t; WP
+   390.805688 122 he; hh iy; hh iy; PRP
+   391.095688 122 is; ih z; ih z; VBZ
+   391.124417 122 i; ay; ay; PRP
+   391.375688 122 mean; m iy n; m iy n; NN
+   391.585688 122 with; w ih th; w ih dh; IN
+   391.695688 122 my; m ay; m ay; PRP$
+   392.085688 122 husband; hh ah z b ah n d; hh ah z b ah n d; NN
+   392.234507 122 i; ay; ay; PRP
+   392.465688 122 really; r iy l iy; r iy l iy; RB
+   392.755688 122 didn't; d ih d en t; d ih d en t; VBP_RB
+   392.985688 122 care; k eh r; k eh r; NN
+   393.065688 122 if; ih f; ih f; IN
+   393.185688 122 he; hh iy; hh iy; PRP
+   393.485688 122 turned; t er n d; t ah r n d; VBN
+   393.950101 122 catholic; k ae th ah l ih k; k ae th ah l ih k; JJ
+   394.015688 122 or; ow r; ao r; CC
+   394.335688 122 not; n aa t; n aa t; RB
+   395.143562 122 <SIL>; S; S; null
+   395.225329 122 i; ay; ay; PRP
+   395.443562 122 do; d uw; d ah; VBP
+   395.753562 122 think; th ih ng k; th ih ng k; VB
+   396.143562 122 religion; r ih l ih jh ah n; r iy l ih jh ah n; NN
+   396.303562 122 is; ih z; ih z; VBZ
+   397.033562 122 important; ih m p ow r t en t; ih m p ao r t en t; JJ
+   397.243562 122 <SIL>; S; S; null
+   397.483562 122 and; ae n d; ae n d; CC
+   397.913562 122 whatever; w ah t eh v er; w ah t eh v ah r; WDT
+   398.043562 122 that; dh ae t; dh ae t; DT
+   398.443562 122 religion; r ih l ih jh ah n; r ih l ih jh ah n; NN
+   398.583562 122 is; ih z; ih z; VBZ
+   398.723562 122 to; t uw; t ah; TO
+   398.883562 122 him; hh ih m; hh ih m; PRP
+   399.203562 122 and; ae n d; eh n d; CC
+   399.373562 122 that; dh ae t; dh ae t; IN
+   399.623562 122 he; hh iy; hh iy; PRP
+   400.143562 122 has; hh ae z; hh ae z; VBZ
+   400.313562 122 <SIL>; S; S; null
+   400.413562 122 a; ey; ey; DT
+   400.663562 122 place; p l ey s; p l ey s; NN
+   400.823562 122 to; t uw; t ah; TO
+   401.013562 122 go; g ow; g ow; VB
+   401.113562 122 to; t uw; t ah; TO
+   401.563562 122 pray; p r ey; p r ey; NN
+   401.903651 122 <VOCNOISE>; U; U; null
+   402.053562 122 to; t uw; d ih; TO
+   402.333562 122 be; b iy; b iy; VB
+   402.693562 122 with; w ih th; w ih th; IN
+   403.213562 122 <SIL>; S; S; null
+   403.423562 122 his; hh ih z; hh ih z; PRP$
+   404.053562 122 family; f ae m ah l iy; f ae m ah l iy; NN
+   404.508409 122 <SIL>; S; S; null
+   404.633562 122 and; ae n d; n d; CC
+   404.863562 122 other; ah dh er; ah dh ah r; JJ
+   405.363562 122 people; p iy p el; p iy p ah l; NNS
+   405.893562 122 <SIL>; S; S; null
+   406.133584 122 i; ay; ay; PRP
+   406.427312 122 think; th ih ng k; th ih ng k; VBP
+   406.657312 122 that's; dh ae t s; dh ae t s; DT_VBZ
+   407.157312 122 important; ih m p ow r t en t; ih m p ao r t en t; JJ
+   407.217312 122 if; ih f; ih f; IN
+   407.287312 122 he; hh iy; hh iy; PRP
+   407.607312 122 wants; w aa n t s; w aa n t s; VBZ
+   407.667312 122 to; t uw; t ah; TO
+   407.697312 122 <SIL>; S; S; null
+   409.557312 122 be; b iy; b iy; VB
+   409.959267 122 catholic; k ae th ah l ih k; k ae th ah l ih k; JJ
+   410.607312 122 great; g r ey t; g r ey t; JJ
+   410.707312 122 if; ih f; ih f; IN
+   410.807312 122 he; hh iy; hh iy; PRP
+   411.415631 122 doesn't; d ah z ah n t; d ah z ah n t; VBZ_RB
+   413.320586 122 <SIL>; S; S; null
+   413.584165 122 that's; dh ae t s; ae t s; DT_VBZ
+   413.887312 122 okay; ow k ey; ow k ey; VBP
+   414.063113 122 too; t uw; t uw; RB
+   419.757023 122 <IVER>; S; S; null
+   420.148000 122 okay; ow k ey; ah ng k ey; NN
+   422.860065 122 <IVER>; S; S; null
+   423.148000 122 okay; ow k ey; ng k ey; NN
+   423.149049 122 {E_TRANS}; E; E; null
