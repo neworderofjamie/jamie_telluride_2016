@@ -20,13 +20,9 @@ class TimingDependenceCerebellum(AbstractTimingDependence):
     def __init__(self, tau=20.0):
         AbstractTimingDependence.__init__(self)
 
-        self._tau = tau
+        self.tau = tau
 
         self._synapse_structure = SynapseStructureWeightOnly()
-
-    @property
-    def tau(self):
-        return self._tau
 
     def is_same_as(self, other):
         if (other is None) or (not isinstance(
