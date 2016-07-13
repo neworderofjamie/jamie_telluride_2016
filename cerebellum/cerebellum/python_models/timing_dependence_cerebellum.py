@@ -12,23 +12,24 @@ logger = logging.getLogger(__name__)
 
 # Constants
 LOOKUP_SIN_SIZE = 256
-LOOKUP_TAU_SHIFT = 0
+LOOKUP_SIN_SHIFT = 0
 
 
 class TimingDependenceCerebellum(AbstractTimingDependence):
 
-    def __init__(self, tau=20.0):
+    def __init__(self, tau=20.0, peak_time=100.0):
         AbstractTimingDependence.__init__(self)
 
         self.tau = tau
+        self.peak_time = peak_time
 
         self._synapse_structure = SynapseStructureWeightOnly()
 
     def is_same_as(self, other):
         if (other is None) or (not isinstance(
-                other, TimingDependenceVogels2011)):
+                other, TimingDependenceCerebellum)):
             return False
-        return ((self._tau == other._tau) and (self._alpha == other._alpha))
+        return ((self.tau == other.tau) and (self.peak_time == other.peak_time))
 
     @property
     def vertex_executable_suffix(self):
@@ -55,7 +56,7 @@ class TimingDependenceCerebellum(AbstractTimingDependence):
                                       "supports 1ms timesteps")
         # Write lookup table
         plasticity_helpers.write_exp_lut(
-            spec, self.tau, LOOKUP_TAU_SIZE, LOOKUP_TAU_SHIFT)
+            spec, self.tau, LOOKUP_SIN_SIZE, LOOKUP_SIN_SHIFT)
 
     @property
     def synaptic_structure(self):
