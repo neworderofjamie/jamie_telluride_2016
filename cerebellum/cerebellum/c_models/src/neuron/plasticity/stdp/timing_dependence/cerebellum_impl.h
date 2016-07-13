@@ -29,13 +29,28 @@ typedef struct pre_trace_t {
 #define SIN_TIME_SHIFT 0
 #define SIN_SIZE 256
 
-// Helper macros for looking up decays
-#define SIN_LOOKUP_TAU(time)  maths_lut_exponential_decay(time, SIN_TIME_SHIFT, SIN_SIZE, sin_lookup)
-
 //---------------------------------------
 // Externals
 //---------------------------------------
 extern int16_t sin_lookup[SIN_SIZE];
+extern uint32_t peak_time;
+
+//---------------------------------------
+// Helpers
+//---------------------------------------
+static inline int32_t lut_sin_exp_decay(uint32_t time)
+{
+  // If we're before the peak, return 0
+  if(time < peak_time)
+  {
+    return 0;
+  }
+  // Otherwise subtract delay and return from LUT
+  else
+  {
+    return maths_lut_exponential_decay(time - peak_time, SIN_TIME_SHIFT, SIN_SIZE, sin_lookup);
+  }
+}
 
 //---------------------------------------
 // Timing dependence inline functions
@@ -103,7 +118,7 @@ static inline update_state_t timing_apply_post_spike(
     // Get time of event relative to last pre-synaptic event
     uint32_t time_since_last_pre = time - last_pre_time;
     if (time_since_last_pre > 0) {
-        int32_t decayed_sin = SIN_LOOKUP_TAU(time_since_last_pre);
+        int32_t decayed_sin = lut_sin_exp_decay(time_since_last_pre);
 
         log_debug("\t\t\ttime_since_last_pre=%u, decayed_sin=%d\n",
                   time_since_last_pre, decayed_sin);

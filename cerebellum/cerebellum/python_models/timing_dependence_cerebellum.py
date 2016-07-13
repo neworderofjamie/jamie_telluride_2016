@@ -44,13 +44,17 @@ class TimingDependenceCerebellum(AbstractTimingDependence):
         return 0
 
     def get_parameters_sdram_usage_in_bytes(self):
-        return (2 * LOOKUP_SIN_SIZE)
+        return 4 + (2 * LOOKUP_SIN_SIZE)
 
     @property
     def n_weight_terms(self):
         return 1
 
     def write_parameters(self, spec, machine_time_step, weight_scales):
+        # Write peak time in timesteps
+        spec.write_value(data=self.peak_time * (1000.0 / machine_time_step),
+                         data_type=DataType.UINT32)
+
         # Calculate time constant reciprocal
         time_constant_reciprocal = (1.0 / float(self.tau)) * (machine_time_step / 1000.0)
 
