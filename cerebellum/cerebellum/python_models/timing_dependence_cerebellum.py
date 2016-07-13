@@ -8,6 +8,8 @@ from spynnaker.pyNN.models.neuron.plasticity.stdp.common \
     import plasticity_helpers
 
 import logging
+import math
+
 logger = logging.getLogger(__name__)
 
 # Constants
@@ -49,15 +51,32 @@ class TimingDependenceCerebellum(AbstractTimingDependence):
         return 1
 
     def write_parameters(self, spec, machine_time_step, weight_scales):
+        # Calculate time constant reciprocal
+        time_constant_reciprocal = (1.0 / float(self.tau)) * (machine_time_step / 1000.0)
 
-        # Check timestep is valid
-        if machine_time_step != 1000:
-            raise NotImplementedError("STDP LUT generation currently only "
-                                      "supports 1ms timesteps")
-        # Write lookup table
-        plasticity_helpers.write_exp_lut(
-            spec, self.tau, LOOKUP_SIN_SIZE, LOOKUP_SIN_SHIFT)
+        # Generate LUT
+        last_value = None
+        for i in range(LOOKUP_SIN_SIZE):
+            # Apply shift to get time from index
+            time = (i << LOOKUP_SIN_SHIFT)
+
+            # Multiply by time constant and calculate negative exponential
+            value = float(time) * time_constant_reciprocal
+            exp_float = math.exp(-value) * math.cos(value)**20
+
+            # Convert to fixed-point and write to spec
+            last_value = plasticity_helpers.float_to_fixed(exp_float, plasticity_helpers.STDP_FIXED_POINT_ONE)
+            spec.write_value(data=last_value, data_type=DataType.INT16)
+
+        self._tau_last_entry = float(last_value) / float(plasticity_helpers.STDP_FIXED_POINT_ONE)
 
     @property
     def synaptic_structure(self):
         return self._synapse_structure
+
+    def get_provenance_data(self, pre_population_label, post_population_label):
+        prov_data = list()
+        prov_data.append(plasticity_helpers.get_lut_provenance(
+            pre_population_label, post_population_label, "TimingDependenceCerebellum",
+            "tau_last_entry", "tau", self._tau_last_entry))
+        return prov_data
