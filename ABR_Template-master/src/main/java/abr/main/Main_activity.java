@@ -84,9 +84,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 
 	//variables for compass
 	private SensorManager mSensorManager;
-	private Sensor mCompass, mAccelerometer;
-    float[] mGravity;
-	float[] mGeomagnetic;
+	private Sensor mLinearAcceleration, mRotationVector;
 
 	// called whenever the activity is created
 	public void onCreate(Bundle savedInstanceState) {
@@ -123,10 +121,8 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 
 		//set up compass
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-	    mCompass= mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-	    mAccelerometer= mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        //mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-	    //mGravityS = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+		mRotationVector = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+	    mLinearAcceleration= mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 
 		// Add supported actuators
 		AddActuator("speed", 1,
@@ -160,6 +156,7 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 		AddSensor("orientation", 3, 50008);
 		AddSensor("sonar", 3, 50009);
 		AddSensor("ir", 2, 50010);
+		AddSensor("linear_acceleration", 3, 50011);
 
 		// Create SpiNNaker event handler
 		m_SpiNNakerReceiverHandler =
@@ -238,17 +235,17 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 					ConvertIR(m_ioio_thread.get_ir1_reading()),
 					ConvertIR(m_ioio_thread.get_ir2_reading()));
 		}
+/*
+		if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
 
-		//if (event.sensor.getType() == Sensor.TYPE_GRAVITY)
-		//mGravityV = event.values;
-		//if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE)
-		//	mGyro = event.values;
-		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
-			mGravity = event.values;
-		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+		}*/
+		if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+			UpdateSensor("linear_acceleration", event.values[0], event.values[1], event.values[2]);
+		}
+		/*else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
 			mGeomagnetic = event.values;
-
-		if (mGravity != null && mGeomagnetic != null) {
+		}
+		else if (mGravity != null && mGeomagnetic != null) {
 			float[] temp = new float[9];
 			float[] R = new float[9];
 			//Load rotation matrix into R
@@ -272,11 +269,11 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 			}
 			//Update the compass direction
 			float heading = values[0]+12;
-			heading = (heading*5 + fixWraparound(values[0]+12))/6; //add 12 to make up for declination in Irvine, average out from previous 2 for smoothness(*/
+			heading = (heading*5 + fixWraparound(values[0]+12))/6; //add 12 to make up for declination in Irvine, average out from previous 2 for smoothness
 
 			UpdateSensor("orientation",
 					values[0], values[1], values[2]);
-		}
+		}*/
 	}
 
 	
@@ -285,10 +282,8 @@ public class Main_activity extends Activity implements IOIOLooperProvider, Senso
 	public void onResume() {
 		super.onResume();
 
-	    mSensorManager.registerListener(this, mCompass, SensorManager.SENSOR_DELAY_NORMAL);
-	    mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-	    //mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_NORMAL);
-	    //mSensorManager.registerListener(this, mGravityS, SensorManager.SENSOR_DELAY_NORMAL);
+	   	// mSensorManager.registerListener(this, mCompass, SensorManager.SENSOR_DELAY_NORMAL);
+	    mSensorManager.registerListener(this, mLinearAcceleration, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 	
 	//Called when activity pauses
