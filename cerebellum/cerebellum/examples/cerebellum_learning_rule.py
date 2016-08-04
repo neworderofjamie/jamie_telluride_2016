@@ -10,7 +10,7 @@ import cerebellum as cer
 # ------------------------------------------------------------------
 # Common parameters
 # ------------------------------------------------------------------
-teaching_time = 500
+teaching_time = 400
 delta_t = range(0,teaching_time,10)
 start_time = 200
 num_pre_cells = 100
@@ -32,13 +32,14 @@ cell_params = {'cm': 0.25,  # nF
 sim.setup(timestep=0.1, min_delay=1.0, max_delay=10.0)
 
 
-sim_time = teaching_time + 100.0
+sim_time = 2000.0
 first_spike_time = 100.0
 pre_stim = []
 
 for delta in delta_t:
     print first_spike_time + delta
-    pre_stim.append(sim.Population(1, sim.SpikeSourceArray,{'spike_times': [first_spike_time+delta, ]}))
+    pre_stim.append(sim.Population(1, sim.SpikeSourceArray,{'spike_times': [first_spike_time + delta,
+                                                                            2000.0]}))
 
 
 teaching_stim = sim.Population(1, sim.SpikeSourceArray,{'spike_times': [teaching_time, ]})
@@ -50,8 +51,8 @@ population = sim.Population(1, model, cell_params)
 
  # Plastic Connection between pre_pop and post_pop
 stdp_model = sim.STDPMechanism(
-    timing_dependence = cer.TimingDependenceCerebellum(tau=20.0),
-    weight_dependence = sim.AdditiveWeightDependence(w_min=0.0, w_max=1.0, A_plus=0.1, A_minus=0.1)
+    timing_dependence = cer.TimingDependenceCerebellum(tau=50.0),
+    weight_dependence = sim.AdditiveWeightDependence(w_min=0.0, w_max=1.0, A_plus=0.1, A_minus=0.5)
 )
 
 # Connections between spike sources and neuron populations
@@ -82,8 +83,10 @@ end_w = [p.getWeights()[0] for p in projections_pf]
 # Plot STDP curve
 figure, axis = pylab.subplots()
 axis.set_xlabel('Time')
-axis.set_ylabel('Weight',rotation="horizontal", size="xx-large")
-axis.plot(delta_t, end_w)
+axis.set_ylabel('Weight')
+axis.set_ylim((0.0, 1.0))
+axis.plot([d + first_spike_time for d in delta_t], end_w)
+axis.axvline(teaching_time, linestyle="--")
 
 pylab.show()
 
