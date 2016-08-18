@@ -11,6 +11,8 @@ address_t timing_initialise(address_t address) {
     log_info("timing_initialise: starting");
     log_info("\tCerebellum timing rule");
 
+    // this address contains peak time in units of timesteps. 
+    // we added half the SIN_LUT size, since this is where the LUT peaks
     peak_time = address[0];
     log_info("\t\tPeak time:%u timesteps", peak_time);
 

@@ -27,27 +27,27 @@ typedef struct pre_trace_t {
 
 // Exponential decay lookup parameters
 #define SIN_TIME_SHIFT 0
-#define SIN_SIZE 256
+#define SIN_SIZE 512
 
 //---------------------------------------
 // Externals
 //---------------------------------------
 extern int16_t sin_lookup[SIN_SIZE];
-extern uint32_t peak_time;
+extern int32_t peak_time;
 
 //---------------------------------------
 // Helpers
 //---------------------------------------
 static inline int32_t lut_sin_exp_decay(uint32_t time)
 {
-  // If we're before the peak, return 0
+  // If we're before the LUT, return 0
   if(time < peak_time)
   {
     return 0;
   }
   // Otherwise subtract delay and return from LUT
   else
-  {
+  {    
     return maths_lut_exponential_decay(time - peak_time, SIN_TIME_SHIFT, SIN_SIZE, sin_lookup);
   }
 }
@@ -114,20 +114,22 @@ static inline update_state_t timing_apply_post_spike(
     use(&last_pre_trace);
     use(&last_post_time);
     use(&last_post_trace);
+    uint32_t time_since_last_pre;
 
     // Get time of event relative to last pre-synaptic event
-    uint32_t time_since_last_pre = time - last_pre_time;
-    if (time_since_last_pre > 0) {
-        int32_t decayed_sin = lut_sin_exp_decay(time_since_last_pre);
+    if (time > last_pre_time) {
+      time_since_last_pre = time - last_pre_time;
+        
+      int32_t decayed_sin = lut_sin_exp_decay(time_since_last_pre);
+      log_debug("\t\t\ttime_since_last_pre=%u, decayed_sin=%d\n",
+                              time_since_last_pre, decayed_sin);
 
-        log_debug("\t\t\ttime_since_last_pre=%u, decayed_sin=%d\n",
-                  time_since_last_pre, decayed_sin);
-
-        // Apply depression to state (which is a weight_state)
-        return weight_one_term_apply_depression(previous_state, decayed_sin);
-    } else {
-        return previous_state;
-    }
+      // Apply depression to state (which is a weight_state)
+      return weight_one_term_apply_depression(previous_state, decayed_sin);
+   }
+   else {
+      return previous_state;
+  }
 }
 
 #endif	// _CEREBELLUM_TIMING_H_

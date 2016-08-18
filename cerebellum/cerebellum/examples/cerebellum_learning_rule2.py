@@ -10,11 +10,9 @@ import cerebellum as cer
 # ------------------------------------------------------------------
 # Common parameters
 # ------------------------------------------------------------------
-teaching_time = 400
-tau=50
+teaching_time = 400.
+tau=50.
 peak_time = 100.
-delta_t = range(0,6*tau,2)
-start_time = 200
 #num_pre_cells = 100
 
 # Population parameters
@@ -31,25 +29,23 @@ cell_params = {'cm': 0.25,  # nF
                }
 
 # SpiNNaker setup
-sim.setup(timestep=0.1, min_delay=1.0, max_delay=10.0)
-
+sim.setup(timestep=0.2, min_delay=1.0, max_delay=1.0)
 
 sim_time = 2000.0
-first_spike_time = 200.0
 pre_stim = []
 
-for delta in delta_t:
-    print first_spike_time + delta
-    pre_stim.append(sim.Population(1, sim.SpikeSourceArray,{'spike_times': [first_spike_time + delta,
-                                                                            2000.0]}))
+spike_times = []
+for t in pylab.arange(0,teaching_time,2.):
+    print t
+    spike_times.append([t,sim_time])
 
+print spike_times,len(spike_times)
+pre_stim = sim.Population(len(spike_times),sim.SpikeSourceArray,{'spike_times': spike_times})
 
-teaching_stim = sim.Population(1, sim.SpikeSourceArray,{'spike_times': [teaching_time, ]})
-
+teaching_stim = sim.Population(1, sim.SpikeSourceArray,{'spike_times': [teaching_time]})
 
 # Neuron populations
 population = sim.Population(1, model, cell_params)
-
 
  # Plastic Connection between pre_pop and post_pop
 stdp_model = sim.STDPMechanism(
@@ -58,13 +54,11 @@ stdp_model = sim.STDPMechanism(
 )
 
 # Connections between spike sources and neuron populations
-projections_pf = []
-for stim in pre_stim:
     ####### SET HERE THE PARALLEL FIBER-PURKINJE CELL LEARNING RULE
-    ee_connector = sim.OneToOneConnector(weights=0.5)
-    projections_pf.append(sim.Projection(stim, population, ee_connector,
+ee_connector = sim.AllToAllConnector(weights=0.5)
+projection_pf = sim.Projection(pre_stim, population, ee_connector,
                                          synapse_dynamics=sim.SynapseDynamics(slow=stdp_model),
-                                         target='excitatory'))
+                                         target='excitatory')
 
 # SET HERE THE TEACHING SIGNAL PROJECTION
 ee_connector = sim.OneToOneConnector()
@@ -76,19 +70,19 @@ print("Simulating for %us" % (sim_time / 1000))
 sim.run(sim_time)
 
 # Get weight from each projection
-end_w = [p.getWeights()[0] for p in projections_pf]
-
+end_w = projection_pf.getWeights() #[p.getWeights()[0] for p in projections_pf]
+print end_w
 
 # -------------------------------------------------------------------
 # Plot curve
 # -------------------------------------------------------------------
 # Plot STDP curve
 figure, axis = pylab.subplots()
-axis.set_xlabel('Time')
+axis.set_xlabel('Time Delta')
 axis.set_ylabel('Weight')
 axis.set_ylim((0.0, 1.0))
-axis.plot([d + first_spike_time for d in delta_t], end_w)
-axis.axvline(teaching_time, linestyle="--")
+axis.plot([t[0] - teaching_time for t in spike_times], end_w)
+#axis.axvline(teaching_time, linestyle="--")
 
 pylab.show()
 

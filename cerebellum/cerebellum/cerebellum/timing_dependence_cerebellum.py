@@ -13,13 +13,13 @@ import math
 logger = logging.getLogger(__name__)
 
 # Constants
-LOOKUP_SIN_SIZE = 256
+LOOKUP_SIN_SIZE = 512
 LOOKUP_SIN_SHIFT = 0
 
 
 class TimingDependenceCerebellum(AbstractTimingDependence):
 
-    def __init__(self, tau=20.0, peak_time=100.0):
+    def __init__(self, tau=40.0, peak_time=100.0):
         AbstractTimingDependence.__init__(self)
 
         self.tau = tau
@@ -52,21 +52,29 @@ class TimingDependenceCerebellum(AbstractTimingDependence):
 
     def write_parameters(self, spec, machine_time_step, weight_scales):
         # Write peak time in timesteps
-        spec.write_value(data=self.peak_time * (1000.0 / machine_time_step),
-                         data_type=DataType.UINT32)
+        peak_time_data = self.peak_time * (1000.0 / machine_time_step) - LOOKUP_SIN_SIZE/2 
+        print "peak time data:", peak_time_data, "peak_time:", self.peak_time
+        spec.write_value(data=peak_time_data,
+                         data_type=DataType.INT32)
 
         # Calculate time constant reciprocal
         time_constant_reciprocal = (1.0 / float(self.tau)) * (machine_time_step / 1000.0)
-
+        
+        # This offset is the quasi-symmetry point
+        sinadd_pwr = 20
+        zero_offset = math.atan(-1./sinadd_pwr)
+        max_value = math.exp(-zero_offset)*math.cos(zero_offset)**sinadd_pwr
+        
         # Generate LUT
         last_value = None
-        for i in range(LOOKUP_SIN_SIZE):
+        for i in range(-LOOKUP_SIN_SIZE/2,-LOOKUP_SIN_SIZE/2 + LOOKUP_SIN_SIZE):
             # Apply shift to get time from index
             time = (i << LOOKUP_SIN_SHIFT)
-
+            
             # Multiply by time constant and calculate negative exponential
-            value = float(time) * time_constant_reciprocal
-            exp_float = math.exp(-value) * math.cos(value)**20
+            value = float(time) * time_constant_reciprocal + zero_offset
+            exp_float = math.exp(-value) * math.cos(value)**sinadd_pwr / max_value
+            print i, exp_float
 
             # Convert to fixed-point and write to spec
             last_value = plasticity_helpers.float_to_fixed(exp_float, plasticity_helpers.STDP_FIXED_POINT_ONE)
