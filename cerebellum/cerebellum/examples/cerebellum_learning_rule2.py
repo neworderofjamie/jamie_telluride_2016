@@ -29,15 +29,16 @@ cell_params = {'cm': 0.25,  # nF
                }
 
 # SpiNNaker setup
-sim.setup(timestep=0.2, min_delay=1.0, max_delay=1.0)
+ts=0.5	# does not work at 0.4, 0.6, 0.8, why??
+sim.setup(timestep=ts, min_delay=ts, max_delay=15*ts)
 
-sim_time = 2000.0
+sim_time = 2000.
 pre_stim = []
 
 spike_times = []
 for t in pylab.arange(0,teaching_time,2.):
     print t
-    spike_times.append([t,sim_time])
+    spike_times.append([t,sim_time-ts])
 
 print spike_times,len(spike_times)
 pre_stim = sim.Population(len(spike_times),sim.SpikeSourceArray,{'spike_times': spike_times})
