@@ -52,7 +52,7 @@ class TimingDependenceCerebellum(AbstractTimingDependence):
 
     def write_parameters(self, spec, machine_time_step, weight_scales):
         # Write peak time in timesteps
-        peak_time_data = self.peak_time * (1000.0 / machine_time_step) - LOOKUP_SIN_SIZE/2 
+        peak_time_data = int(self.peak_time * (1000.0 / machine_time_step) - LOOKUP_SIN_SIZE/2  + 0.5)
         print "peak time data:", peak_time_data, "peak_time:", self.peak_time
         spec.write_value(data=peak_time_data,
                          data_type=DataType.INT32)
@@ -73,7 +73,11 @@ class TimingDependenceCerebellum(AbstractTimingDependence):
             
             # Multiply by time constant and calculate negative exponential
             value = float(time) * time_constant_reciprocal + zero_offset
-            exp_float = math.exp(-value) * math.cos(value)**sinadd_pwr / max_value
+            # we want a single bump only, so we clip the arg at pi/2
+            if abs(value) > math.pi/2.:
+                exp_float = 0.0
+            else:
+                exp_float = math.exp(-value) * math.cos(value)**sinadd_pwr / max_value
             print i, exp_float
 
             # Convert to fixed-point and write to spec
