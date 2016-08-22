@@ -40,16 +40,11 @@ extern int32_t peak_time;
 //---------------------------------------
 static inline int32_t lut_sin_exp_decay(uint32_t time)
 {
-  // If we're before the LUT, return 0
-  if(time < peak_time)
-  {
-    return 0;
-  }
-  // Otherwise subtract delay and return from LUT
-  else
-  {    
-    return maths_lut_exponential_decay(time - peak_time, SIN_TIME_SHIFT, SIN_SIZE, sin_lookup);
-  }
+  // Subtract delay and return from LUT
+  // peak_time includes offset of peak center = SIN_SIZE/2
+  int32_t reltime = time - peak_time;
+  if ( reltime >= 0 ) return maths_lut_exponential_decay(reltime, SIN_TIME_SHIFT, SIN_SIZE, sin_lookup);
+  else return 0;
 }
 
 //---------------------------------------

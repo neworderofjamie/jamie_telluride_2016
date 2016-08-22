@@ -1,7 +1,7 @@
 #include "cerebellum_impl.h"
 
 int16_t sin_lookup[SIN_SIZE];
-uint32_t peak_time;
+int32_t peak_time;
 
 //---------------------------------------
 // Functions
