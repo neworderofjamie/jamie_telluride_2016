@@ -38,7 +38,7 @@ pre_stim = []
 spike_times = []
 
 ######## CRASH ME BY USING 1.0ms steps instead of 2.0ms
-for t in pylab.arange(0,teaching_time,2.0):
+for t in pylab.arange(0,teaching_time,1.0):
     spike_times.append([t,sim_time-t])
 
 pre_stim = sim.Population(len(spike_times),sim.SpikeSourceArray,{'spike_times': spike_times})
